@@ -83,7 +83,7 @@
                 <a href="#topics" class="hover:text-pink-300 transition-colors">Top Topics</a>
                 <a href="#paper" class="hover:text-pink-300 transition-colors">Predicted Paper</a>
                 <button id="theme-toggle"
-                    class="ml-4 p-2 rounded-full bg-white dark:bg-gray-800 dark:border-gray-700/20 hover:bg-white dark:bg-gray-800 dark:border-gray-700/30 transition-colors"
+                    class="ml-4 p-2 rounded-full text-gray-800 dark:text-gray-100 bg-white dark:bg-gray-800 dark:border-gray-700/20 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                     aria-label="Toggle Dark Mode">
                     <svg id="theme-toggle-dark-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20"
                         xmlns="http://www.w3.org/2000/svg">
@@ -785,8 +785,18 @@
                 responsive: true,
                 maintainAspectRatio: false,
                 cutout: '70%',
+                layout: {
+                    padding: {
+                        bottom: 30
+                    }
+                },
                 plugins: {
-                    legend: { position: 'bottom' },
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 20
+                        }
+                    },
                     tooltip: {
                         callbacks: {
                             title: function (tooltipItems) {
