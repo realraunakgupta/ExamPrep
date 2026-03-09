@@ -4,6 +4,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>
+    if (location.protocol !== 'https:' && location.hostname.endsWith('surge.sh')) {
+      location.replace(`https:${location.href.substring(location.protocol.length)}`);
+    }
+  </script>
   <title>NAS Mid-Term — Ultimate Guide</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -1279,7 +1284,7 @@
             <p style="margin:5px 0; font-weight:600; font-size:0.9rem;">B.TECH PROGRAMMES (UNDER THE AEGIS OF USICT)</p>
             <p style="margin:5px 0; font-size:0.85rem;">Fourth Semester</p>
             <div
-              style="display:flex; justify-content:space-between; margin-top:1rem; font-weight:700; font-size:0.85rem; border-top:1px solid #eee; pt:0.5rem;">
+              style="display:flex; justify-content:space-between; margin-top:1rem; font-weight:700; font-size:0.85rem; border-top:1px solid #eee; padding-top:0.5rem;">
               <span>Paper Code: EEC-206</span>
               <span>Subject: Network Analysis and Synthesis</span>
             </div>

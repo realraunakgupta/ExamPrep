@@ -4,6 +4,11 @@
 <head>
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <script>
+    if (location.protocol !== 'https:' && location.hostname.endsWith('surge.sh')) {
+      location.replace(`https:${location.href.substring(location.protocol.length)}`);
+    }
+  </script>
   <title>PSLP Mid-Term — Ultimate Guide</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -929,7 +934,8 @@
             </svg>
             May 2023
           </a>
-          <a href="assets/pdfs/PSLP/PSLP_Mid_Term_November_2023.pdf" download="PSLP_Mid_Term_November_2023.pdf" target="_blank"
+          <a href="assets/pdfs/PSLP/PSLP_Mid_Term_November_2023.pdf" download="PSLP_Mid_Term_November_2023.pdf"
+            target="_blank"
             class="bg-[rgba(212,160,23,0.15)] hover:bg-[rgba(212,160,23,0.3)] text-[#d4c79a] border border-[rgba(212,160,23,0.35)] px-4 py-2 rounded-lg text-sm font-medium shadow-sm transition-colors flex items-center gap-2">
             <svg class="w-4 h-4" style="width:1rem;height:1rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -938,7 +944,8 @@
             </svg>
             Nov 2023
           </a>
-          <a href="assets/pdfs/PSLP/PSLP_Mid_Term_April_2024.pdf" download="PSLP_Mid_Term_April_2024.pdf" target="_blank"
+          <a href="assets/pdfs/PSLP/PSLP_Mid_Term_April_2024.pdf" download="PSLP_Mid_Term_April_2024.pdf"
+            target="_blank"
             class="bg-[rgba(212,160,23,0.15)] hover:bg-[rgba(212,160,23,0.3)] text-[#d4c79a] border border-[rgba(212,160,23,0.35)] px-4 py-2 rounded-lg text-sm font-medium shadow-sm transition-colors flex items-center gap-2">
             <svg class="w-4 h-4" style="width:1rem;height:1rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -947,7 +954,8 @@
             </svg>
             April 2024
           </a>
-          <a href="assets/pdfs/PSLP/PSLP_Mid_Term_March_2025.pdf" download="PSLP_Mid_Term_March_2025.pdf" target="_blank"
+          <a href="assets/pdfs/PSLP/PSLP_Mid_Term_March_2025.pdf" download="PSLP_Mid_Term_March_2025.pdf"
+            target="_blank"
             class="bg-[rgba(212,160,23,0.15)] hover:bg-[rgba(212,160,23,0.3)] text-[#d4c79a] border border-[rgba(212,160,23,0.35)] px-4 py-2 rounded-lg text-sm font-medium shadow-sm transition-colors flex items-center gap-2">
             <svg class="w-4 h-4" style="width:1rem;height:1rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -962,17 +970,28 @@
           (2023-2025)</h3>
         <div class="space-y-3">
 
-                    <div class="acc-group">
+          <div class="acc-group">
             <div class="acc-header" onclick="toggleAcc(this)">
               <span class="font-semibold">Topic 1: Bayes' Theorem &amp; Conditional Prob.</span>
               <span class="acc-icon">+</span>
             </div>
             <div class="acc-body">
               <ul class="step-list text-[#94a3b8] text-sm space-y-3">
-                <li><strong style="color:#d4c79a">[Q1(a), April 2024]</strong> "Two bolts are drawn from a box containing 6 good and 8 defective bolts. Find the probability that the second bolt is good if the first one is found to be defective."</li>
-                <li><strong style="color:#d4c79a">[Q2(a), Nov 2023]</strong> "A factory has 2 plants. Records shows that the plant 1 produces 30% and plant 2 produces 70% items. Further 5% of the items produced by plant 1 are defective while 1% produced by plant 2 are defective. If a defective item is drawn at random, find the probability that the defective item was produced by: (i) Plant 1 (ii) Plant 2."</li>
-                <li><strong style="color:#d4c79a">[Q2(a), March 2025]</strong> "There are three bags: the First contains 1 white, 2 red, and 3 black balls; the second contains 2 white, 3 red, and 1 black balls; and the third contains 3 white, 1 red, and 2 black balls. Two balls are drawn from a bag chosen at random. These are found to be one white and one red. Find the probability that the balls so drawn came from the second bag."</li>
-                <li><strong style="color:#d4c79a">[Q2(a), May 2023]</strong> "In a toy factory, machines A, B, C manufacture 25%, 35%, 40%. Defect rates 5%, 4%, 2%. Find the probability that a toy is defective, and the probability it was produced by A."</li>
+                <li><strong style="color:#d4c79a">[Q1(a), April 2024]</strong> "Two bolts are drawn from a box
+                  containing 6 good and 8 defective bolts. Find the probability that the second bolt is good if the
+                  first one is found to be defective."</li>
+                <li><strong style="color:#d4c79a">[Q2(a), Nov 2023]</strong> "A factory has 2 plants. Records shows that
+                  the plant 1 produces 30% and plant 2 produces 70% items. Further 5% of the items produced by plant 1
+                  are defective while 1% produced by plant 2 are defective. If a defective item is drawn at random, find
+                  the probability that the defective item was produced by: (i) Plant 1 (ii) Plant 2."</li>
+                <li><strong style="color:#d4c79a">[Q2(a), March 2025]</strong> "There are three bags: the First contains
+                  1 white, 2 red, and 3 black balls; the second contains 2 white, 3 red, and 1 black balls; and the
+                  third contains 3 white, 1 red, and 2 black balls. Two balls are drawn from a bag chosen at random.
+                  These are found to be one white and one red. Find the probability that the balls so drawn came from
+                  the second bag."</li>
+                <li><strong style="color:#d4c79a">[Q2(a), May 2023]</strong> "In a toy factory, machines A, B, C
+                  manufacture 25%, 35%, 40%. Defect rates 5%, 4%, 2%. Find the probability that a toy is defective, and
+                  the probability it was produced by A."</li>
               </ul>
             </div>
           </div>
@@ -984,13 +1003,25 @@
             </div>
             <div class="acc-body">
               <ul class="step-list text-[#94a3b8] text-sm space-y-3">
-                <li><strong style="color:#d4c79a">[Q3(a), April 2024]</strong> "In a sample of 1000 cases, the mean of a certain test is 14 and deviation is 2.5. Assuming the distribution to be normal, find: (i) How many students score between 12 and 15? (ii) How many score below 8? (iii) How many score above 16?"</li>
-                <li><strong style="color:#d4c79a">[Q1(a), March 2025]</strong> "Find the binomial distribution for which mean = 2(variance) and mean + variance = 3, and find P(X &le; 3)."</li>
-                <li><strong style="color:#d4c79a">[Q3(a), May 2023]</strong> "In a normal distribution, 7% of the items are under 35 and 89% are under 63. Find the mean and S.D."</li>
-                <li><strong style="color:#d4c79a">[Q1(e), Nov 2023]</strong> "X is a Poisson variable and it is found that the probability at X=2 is 2/3 of the probability at X=1. Find the probability at X=3."</li>
-                <li><strong style="color:#d4c79a">[Q4(a), Nov 2023]</strong> "If the heights of 300 students are normally distributed with mean 68 inch and standard deviation 3 inch. How many students have height: (i) Greater than 72 inches (ii) Between 65 and 71 inches."</li>
-                <li><strong style="color:#d4c79a">[Q4(a), April 2024]</strong> "An insurance company found that only 0.01% of the population is involved in a certain type of accident each year. If its 1000 policy holders were randomly selected, what is the probability that not more than two of its clients are involved in such an accident next year?"</li>
-                <li><strong style="color:#d4c79a">[Q1(b), March 2025]</strong> "A manufacturer produces medicine bottles and finds that 0.1% of bottles are defective. The bottles are packed in boxes containing 500 bottles. Find that in 100 such boxes are expected to contain no defective bottles."</li>
+                <li><strong style="color:#d4c79a">[Q3(a), April 2024]</strong> "In a sample of 1000 cases, the mean of a
+                  certain test is 14 and deviation is 2.5. Assuming the distribution to be normal, find: (i) How many
+                  students score between 12 and 15? (ii) How many score below 8? (iii) How many score above 16?"</li>
+                <li><strong style="color:#d4c79a">[Q1(a), March 2025]</strong> "Find the binomial distribution for which
+                  mean = 2(variance) and mean + variance = 3, and find P(X &le; 3)."</li>
+                <li><strong style="color:#d4c79a">[Q3(a), May 2023]</strong> "In a normal distribution, 7% of the items
+                  are under 35 and 89% are under 63. Find the mean and S.D."</li>
+                <li><strong style="color:#d4c79a">[Q1(e), Nov 2023]</strong> "X is a Poisson variable and it is found
+                  that the probability at X=2 is 2/3 of the probability at X=1. Find the probability at X=3."</li>
+                <li><strong style="color:#d4c79a">[Q4(a), Nov 2023]</strong> "If the heights of 300 students are
+                  normally distributed with mean 68 inch and standard deviation 3 inch. How many students have height:
+                  (i) Greater than 72 inches (ii) Between 65 and 71 inches."</li>
+                <li><strong style="color:#d4c79a">[Q4(a), April 2024]</strong> "An insurance company found that only
+                  0.01% of the population is involved in a certain type of accident each year. If its 1000 policy
+                  holders were randomly selected, what is the probability that not more than two of its clients are
+                  involved in such an accident next year?"</li>
+                <li><strong style="color:#d4c79a">[Q1(b), March 2025]</strong> "A manufacturer produces medicine bottles
+                  and finds that 0.1% of bottles are defective. The bottles are packed in boxes containing 500 bottles.
+                  Find that in 100 such boxes are expected to contain no defective bottles."</li>
               </ul>
             </div>
           </div>
@@ -1002,12 +1033,24 @@
             </div>
             <div class="acc-body">
               <ul class="step-list text-[#94a3b8] text-sm space-y-3">
-                <li><strong style="color:#d4c79a">[Q1(b), April 2024]</strong> "Find the value of k and mean value of X. If X is continuous random variable with probability density function given by f(x) = kx (0&le;x&lt;2) and 2k (2&le;x&le;4). Then find the expectation E(x) and E(x&sup2;)."</li>
-                <li><strong style="color:#d4c79a">[Q2(b), March 2025]</strong> "Find k so that f(x, y) = kxy, 1 &lt; x &le; y &le; 2 will be a joint probability density function."</li>
-                <li><strong style="color:#d4c79a">[Q4(a), May 2023]</strong> "Three fair coins are tossed. Let X denote the number of heads on the first two coins, Let Y denote the number of tails on the last two coins. Find (i) the joint distribution of X and Y (ii) the conditional distribution of Y given that X=1."</li>
-                <li><strong style="color:#d4c79a">[Q2(b), Nov 2023]</strong> "A random variable X has the probability mass function P(r) = r/15 for x = 1,2,3,4,5, otherwise 0. Find (i) P{X=1 or 2} (ii) P{1/2 &lt; X &lt; 5/2 | X&gt;1}."</li>
-                <li><strong style="color:#d4c79a">[Q1(d), March 2025]</strong> "The probability density function of a variate X is P(X): K, 3K, 5K, 7K, 9K, 11K, 13K for X: 0,1,2,3,4,5,6. Find (i) P(X&lt;4) (ii) P(3&lt;X&le;6) (iii) What will be the minimum value of k so that P(X&le;2)&gt;3."</li>
-                <li><strong style="color:#d4c79a">[Q1(d), Nov 2023]</strong> "Find the moment generating function (m.g.f. about origin) of the exponential distribution f(x) = &lambda;e^(-&lambda;x), 0&le;x&le;&infin;."</li>
+                <li><strong style="color:#d4c79a">[Q1(b), April 2024]</strong> "Find the value of k and mean value of X.
+                  If X is continuous random variable with probability density function given by f(x) = kx (0&le;x&lt;2)
+                  and 2k (2&le;x&le;4). Then find the expectation E(x) and E(x&sup2;)."</li>
+                <li><strong style="color:#d4c79a">[Q2(b), March 2025]</strong> "Find k so that f(x, y) = kxy, 1 &lt; x
+                  &le; y &le; 2 will be a joint probability density function."</li>
+                <li><strong style="color:#d4c79a">[Q4(a), May 2023]</strong> "Three fair coins are tossed. Let X denote
+                  the number of heads on the first two coins, Let Y denote the number of tails on the last two coins.
+                  Find (i) the joint distribution of X and Y (ii) the conditional distribution of Y given that X=1."
+                </li>
+                <li><strong style="color:#d4c79a">[Q2(b), Nov 2023]</strong> "A random variable X has the probability
+                  mass function P(r) = r/15 for x = 1,2,3,4,5, otherwise 0. Find (i) P{X=1 or 2} (ii) P{1/2 &lt; X &lt;
+                  5/2 | X&gt;1}."</li>
+                <li><strong style="color:#d4c79a">[Q1(d), March 2025]</strong> "The probability density function of a
+                  variate X is P(X): K, 3K, 5K, 7K, 9K, 11K, 13K for X: 0,1,2,3,4,5,6. Find (i) P(X&lt;4) (ii)
+                  P(3&lt;X&le;6) (iii) What will be the minimum value of k so that P(X&le;2)&gt;3."</li>
+                <li><strong style="color:#d4c79a">[Q1(d), Nov 2023]</strong> "Find the moment generating function
+                  (m.g.f. about origin) of the exponential distribution f(x) = &lambda;e^(-&lambda;x),
+                  0&le;x&le;&infin;."</li>
               </ul>
             </div>
           </div>
@@ -1019,12 +1062,20 @@
             </div>
             <div class="acc-body">
               <ul class="step-list text-[#94a3b8] text-sm space-y-3">
-                <li><strong style="color:#d4c79a">[Q4(b), March 2025]</strong> "Find the coefficient of correlation for 6 college students who got the following percentage of marks in Economics and Statistics."</li>
-                <li><strong style="color:#d4c79a">[Q1(c), March 2025]</strong> "Calculate the covariance of the following pairs of observations of the variables X and Y: (15,44), (20,43), (25,45), (30,37), (40,34), (50,37)."</li>
-                <li><strong style="color:#d4c79a">[Q3(b), May 2023]</strong> "The ages of Boys and Girls are given in the following table. Calculate the coefficient of correlation between X and Y."</li>
-                <li><strong style="color:#d4c79a">[Q3(b), Nov 2023]</strong> "In a distribution, the mean is 10, variance is 10, skewness is 1 and kurtosis is 4. Obtain the first four moments about origin. Comment upon the nature of distribution."</li>
-                <li><strong style="color:#d4c79a">[Q4(b), Nov 2023]</strong> "Obtain the rank correlation coefficient between the variables X and Y from the following pairs of observed data."</li>
-                <li><strong style="color:#d4c79a">[Q1(c), April 2024]</strong> "If X and Y are jointly distributed random variables, then prove that Var(X+Y) = Var(X) + Var(Y) + 2Cov(X,Y)."</li>
+                <li><strong style="color:#d4c79a">[Q4(b), March 2025]</strong> "Find the coefficient of correlation for
+                  6 college students who got the following percentage of marks in Economics and Statistics."</li>
+                <li><strong style="color:#d4c79a">[Q1(c), March 2025]</strong> "Calculate the covariance of the
+                  following pairs of observations of the variables X and Y: (15,44), (20,43), (25,45), (30,37), (40,34),
+                  (50,37)."</li>
+                <li><strong style="color:#d4c79a">[Q3(b), May 2023]</strong> "The ages of Boys and Girls are given in
+                  the following table. Calculate the coefficient of correlation between X and Y."</li>
+                <li><strong style="color:#d4c79a">[Q3(b), Nov 2023]</strong> "In a distribution, the mean is 10,
+                  variance is 10, skewness is 1 and kurtosis is 4. Obtain the first four moments about origin. Comment
+                  upon the nature of distribution."</li>
+                <li><strong style="color:#d4c79a">[Q4(b), Nov 2023]</strong> "Obtain the rank correlation coefficient
+                  between the variables X and Y from the following pairs of observed data."</li>
+                <li><strong style="color:#d4c79a">[Q1(c), April 2024]</strong> "If X and Y are jointly distributed
+                  random variables, then prove that Var(X+Y) = Var(X) + Var(Y) + 2Cov(X,Y)."</li>
               </ul>
             </div>
           </div>
