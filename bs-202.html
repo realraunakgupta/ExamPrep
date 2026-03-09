@@ -15,6 +15,15 @@
   <link
     href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&amp;family=DM+Mono:wght@400;500&amp;family=Outfit:wght@300;400;500;600;700&amp;display=swap"
     rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <style>
     :root {
       --navy: #0d1b2a;
@@ -783,15 +792,15 @@
             <div>
               <strong class="text-white block mb-1">Generic Solution Logic:</strong>
               <ol class="list-decimal list-inside text-sm text-[#94a3b8] space-y-2">
-                <li><strong class="text-[#e8e4dc]">Define Prior Events:</strong> Let E&#8321;, E&#8322; be the machines.
-                  Define their probabilities P(E&#8321;), P(E&#8322;).</li>
+                <li><strong class="text-[#e8e4dc]">Define Prior Events:</strong> Let $E_1$, $E_2$ be the machines.
+                  Define their probabilities $P($E_1$)$, $P($E_2$)$.</li>
                 <li><strong class="text-[#e8e4dc]">Define Outcome Event:</strong> Let A = "Item is defective".</li>
-                <li><strong class="text-[#e8e4dc]">Find Conditionals:</strong> Identify P(A|E&#8321;) and P(A|E&#8322;)
+                <li><strong class="text-[#e8e4dc]">Find Conditionals:</strong> Identify $P(A|$E_1$)$ and $P(A|$E_2$)$
                   from the text.</li>
                 <li><strong class="text-[#e8e4dc]">Apply Formula:</strong><br>
                   <span
                     class="math-text block mt-2 text-center font-bold bg-[rgba(96,165,250,0.1)] text-[#60a5fa] p-2 rounded">
-                    P(E&#8321;|A) = [P(E&#8321;)&middot;P(A|E&#8321;)] / [&#931; P(E&#x1D62;)&middot;P(A|E&#x1D62;)]
+                    P($$E_1$|A$) = [$P($E_1$)$&middot;$P(A|$E_1$)$] / [\Sigma P($E_i$)&middot;$P(A|$E_i$)$]
                   </span>
                 </li>
               </ol>
@@ -805,18 +814,18 @@
               <strong class="text-white block mb-1">Common Pattern:</strong>
               <p
                 class="text-sm text-[#94a3b8] p-3 rounded bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.1)]">
-                "Items are normally distributed with mean &mu; and variance &sigma;&sup2;. Find percentage of items
+                "Items are normally distributed with mean $\mu$ and variance $\sigma^2$. Find percentage of items
                 having value > X or between X and Y."</p>
             </div>
             <div>
               <strong class="text-white block mb-1">Generic Solution Logic:</strong>
               <ol class="list-decimal list-inside text-sm text-[#94a3b8] space-y-2">
-                <li><strong class="text-[#e8e4dc]">Identify Parameters:</strong> Extract &mu; (mean) and &sigma;
-                  (standard deviation). <i>Careful: if variance is given, root it for &sigma;.</i></li>
+                <li><strong class="text-[#e8e4dc]">Identify Parameters:</strong> Extract $\mu$ (mean) and $\sigma$
+                  (standard deviation). <i>Careful: if variance is given, root it for $\sigma$.</i></li>
                 <li><strong class="text-[#e8e4dc]">Standardize to Z:</strong> Convert the target value X to Z-score:<br>
                   <span
                     class="math-text block mt-1 text-center font-bold bg-[rgba(244,114,182,0.1)] text-[#f472b6] p-2 rounded">Z
-                    = (X - &mu;) / &sigma;</span>
+                    = (X - $\mu$) / $\sigma$</span>
                 </li>
                 <li><strong class="text-[#e8e4dc]">Lookup & Calculate:</strong> Use the provided Z-table values (e.g.,
                   P(0&lt;z&lt;1)=0.3413) to find the area under the curve. Remember total area = 1, half = 0.5.</li>
@@ -831,7 +840,7 @@
               <strong class="text-white block mb-1">Common Pattern:</strong>
               <p
                 class="text-sm text-[#94a3b8] p-3 rounded bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.1)]">
-                "Given probability density function f(x,y) = K(x+y) for 0&lt;x&lt;1. Find K, and find P(X &lt; 0.5)."
+                "Given probability density function f(x,y) = K(x+y) for 0&lt;x&lt;1. Find K, and find $P(X < 0.5)$."
               </p>
             </div>
             <div>
@@ -860,7 +869,7 @@
             <div class="bg-[rgba(139,92,246,0.15)] border border-[#a78bfa] rounded-lg p-4 w-full md:w-48 shadow-sm">
               <div class="font-bold text-[#c4b5fd] mb-1">Step 1</div>
               <div class="text-sm text-[#e8e4dc]">Identify all 'Base' Events (e.g. Machines A, B) & calculate
-                P(E&#x1D62;)</div>
+                P($E_i$)</div>
             </div>
 
             <div class="text-[#a78bfa] text-2xl font-bold md:-rotate-90 md:mt-0 mt-2 rotate-90">&#10140;</div>
@@ -1007,7 +1016,7 @@
                   certain test is 14 and deviation is 2.5. Assuming the distribution to be normal, find: (i) How many
                   students score between 12 and 15? (ii) How many score below 8? (iii) How many score above 16?"</li>
                 <li><strong style="color:#d4c79a">[Q1(a), March 2025]</strong> "Find the binomial distribution for which
-                  mean = 2(variance) and mean + variance = 3, and find P(X &le; 3)."</li>
+                  mean = 2(variance) and mean + variance = 3, and find $P(X \le 3)$."</li>
                 <li><strong style="color:#d4c79a">[Q3(a), May 2023]</strong> "In a normal distribution, 7% of the items
                   are under 35 and 89% are under 63. Find the mean and S.D."</li>
                 <li><strong style="color:#d4c79a">[Q1(e), Nov 2023]</strong> "X is a Poisson variable and it is found
@@ -1034,8 +1043,8 @@
             <div class="acc-body">
               <ul class="step-list text-[#94a3b8] text-sm space-y-3">
                 <li><strong style="color:#d4c79a">[Q1(b), April 2024]</strong> "Find the value of k and mean value of X.
-                  If X is continuous random variable with probability density function given by f(x) = kx (0&le;x&lt;2)
-                  and 2k (2&le;x&le;4). Then find the expectation E(x) and E(x&sup2;)."</li>
+                  If X is continuous random variable with probability density function given by f(x) = kx ($0 \le x < 2$)
+                  and 2k ($2 \le x \le 4$). Then find the expectation E(x) and E(x&sup2;)."</li>
                 <li><strong style="color:#d4c79a">[Q2(b), March 2025]</strong> "Find k so that f(x, y) = kxy, 1 &lt; x
                   &le; y &le; 2 will be a joint probability density function."</li>
                 <li><strong style="color:#d4c79a">[Q4(a), May 2023]</strong> "Three fair coins are tossed. Let X denote
@@ -1044,13 +1053,13 @@
                 </li>
                 <li><strong style="color:#d4c79a">[Q2(b), Nov 2023]</strong> "A random variable X has the probability
                   mass function P(r) = r/15 for x = 1,2,3,4,5, otherwise 0. Find (i) P{X=1 or 2} (ii) P{1/2 &lt; X &lt;
-                  5/2 | X&gt;1}."</li>
+                  5/2 | $X > 1$}."</li>
                 <li><strong style="color:#d4c79a">[Q1(d), March 2025]</strong> "The probability density function of a
-                  variate X is P(X): K, 3K, 5K, 7K, 9K, 11K, 13K for X: 0,1,2,3,4,5,6. Find (i) P(X&lt;4) (ii)
-                  P(3&lt;X&le;6) (iii) What will be the minimum value of k so that P(X&le;2)&gt;3."</li>
+                  variate X is P(X): K, 3K, 5K, 7K, 9K, 11K, 13K for X: 0,1,2,3,4,5,6. Find (i) $P(X < 4)$ (ii)
+                  $P(3 < X \le 6)$ (iii) What will be the minimum value of k so that $P(X \le 2) > 3$."</li>
                 <li><strong style="color:#d4c79a">[Q1(d), Nov 2023]</strong> "Find the moment generating function
-                  (m.g.f. about origin) of the exponential distribution f(x) = &lambda;e^(-&lambda;x),
-                  0&le;x&le;&infin;."</li>
+                  (m.g.f. about origin) of the exponential distribution f(x) = $\lambda e^{-\lambda x}$,
+                  $0 \le x \le \infty$."</li>
               </ul>
             </div>
           </div>
@@ -1093,7 +1102,18 @@
           synthesized directly
           from the May 2023 and Nov 2023 past papers, maintaining the exact weightage, difficulty, and format (1
           compulsory question + choose 2 from 3 long questions).</p>
-        <div
+        <div class="flex justify-center gap-4 mb-6">
+          <button onclick="downloadPDF('predicted-paper-1', 'PSLP_Predicted_Paper_1.pdf')"
+            class="bg-teal-600 hover:bg-teal-500 text-white px-4 py-2 rounded-lg text-sm font-bold shadow transition-colors flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+              </path>
+            </svg>
+            Download as PDF
+          </button>
+        </div>
+        <div id="predicted-paper-1"
           class="bg-[#1a2a3a] dark:bg-[#1a2a3a] dark:border-[rgba(212,160,23,0.14)] rounded-none md:rounded-xl shadow-2xl p-6 md:p-12 border border-[rgba(212,160,23,0.14)] dark:border-[rgba(212,160,23,0.14)] font-serif">
           <div class="text-center mb-8 border-b-2 border-black dark:border-gray-500 pb-4">
             <h3 class="text-xl font-bold uppercase">Mid Term Examination</h3>
@@ -1228,7 +1248,18 @@
         <p class="text-center text-[#94a3b8] dark:text-[#64748b] mb-8 max-w-2xl mx-auto">This alternate paper
           structure explores additional predicted high-yield topics based on the exhaustive analysis of previous
           semesters' examination patterns.</p>
-        <div
+        <div class="flex justify-center gap-4 mb-6">
+          <button onclick="downloadPDF('predicted-paper-2', 'PSLP_Predicted_Paper_Variant_2.pdf')"
+            class="bg-teal-600 hover:bg-teal-500 text-white px-4 py-2 rounded-lg text-sm font-bold shadow transition-colors flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+              </path>
+            </svg>
+            Download Variant II as PDF
+          </button>
+        </div>
+        <div id="predicted-paper-2"
           class="bg-[#1a2a3a] dark:bg-[#1a2a3a] dark:border-[rgba(212,160,23,0.14)] rounded-none md:rounded-xl shadow-2xl p-6 md:p-12 border border-[rgba(212,160,23,0.14)] dark:border-[rgba(212,160,23,0.14)] font-serif">
           <div class="text-center mb-8 border-b-2 border-black dark:border-gray-500 pb-4">
             <h3 class="text-xl font-bold uppercase">Mid Term Examination</h3>
@@ -1481,6 +1512,19 @@
   </div>
 
   <script>
+    function downloadPDF(elementId, filename) {
+      const element = document.getElementById(elementId);
+      // Give it a white background for the PDF just in case since it's dark
+      const opt = {
+        margin: 0.5,
+        filename: filename,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true, backgroundColor: '#1a2a3a' },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+      };
+      html2pdf().set(opt).from(element).save();
+    }
+
     // Tab Switching Logic
     function switchTab(tabId, btn) {
       document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
