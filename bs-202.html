@@ -1,0 +1,1520 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>PSLP Mid-Term — Ultimate Guide</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&amp;family=DM+Mono:wght@400;500&amp;family=Outfit:wght@300;400;500;600;700&amp;display=swap"
+    rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #0d1b2a;
+      --slate: #1b2d44;
+      --card: #f9f7f4;
+      --gold: #d4a017;
+      --gold2: #f0c040;
+      --teal: #2ec4b6;
+      --coral: #e05a4e;
+      --text: #1a1a2e;
+      --muted: #64748b;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--navy);
+      color: #e8e4dc;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* ── Sidebar ── */
+    #sidebar {
+      width: 240px;
+      background: var(--slate);
+      border-right: 1px solid rgba(212, 160, 23, 0.18);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      z-index: 20;
+    }
+
+    .sidebar-logo {
+      padding: 1.5rem 1.25rem 1rem;
+      border-bottom: 1px solid rgba(212, 160, 23, 0.15);
+    }
+
+    .sidebar-logo h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.3rem;
+      color: var(--gold2);
+      margin: 0 0 .2rem;
+    }
+
+    .sidebar-logo p {
+      font-size: .7rem;
+      color: #94a3b8;
+      margin: 0;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      padding: .75rem .5rem;
+      flex: 1;
+    }
+
+    .nav-btn {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      width: 100%;
+      text-align: left;
+      padding: .65rem 1rem;
+      border-radius: 8px;
+      border: none;
+      background: transparent;
+      color: #94a3b8;
+      font-size: .88rem;
+      font-family: 'Outfit', sans-serif;
+      cursor: pointer;
+      transition: all .2s;
+      margin-bottom: .25rem;
+    }
+
+    .nav-btn:hover {
+      background: rgba(255, 255, 255, .05);
+      color: #e8e4dc;
+    }
+
+    .nav-btn.active {
+      background: linear-gradient(135deg, rgba(212, 160, 23, .22), rgba(240, 192, 64, .08));
+      color: var(--gold2);
+      border-left: 3px solid var(--gold);
+      font-weight: 600;
+    }
+
+    .nav-btn .icon {
+      font-size: 1.1rem;
+      width: 1.4rem;
+      text-align: center;
+    }
+
+    .sidebar-footer {
+      padding: .75rem 1rem 1rem;
+      border-top: 1px solid rgba(212, 160, 23, .1);
+      font-size: .68rem;
+      color: #64748b;
+      text-align: center;
+    }
+
+    /* ── Layout ── */
+    #app {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    #main {
+      flex: 1;
+      overflow-y: auto;
+      padding: 2rem 2.5rem;
+      background: #0f1923;
+    }
+
+    /* ── Sections ── */
+    .section {
+      display: none;
+      animation: fadeUp .35s ease;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ── Page header ── */
+    .page-header {
+      margin-bottom: 1.75rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(212, 160, 23, .2);
+    }
+
+    .page-header h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2rem;
+      margin: 0 0 .35rem;
+      color: #f0ece4;
+    }
+
+    .page-header p {
+      color: #94a3b8;
+      margin: 0;
+      font-size: .92rem;
+      max-width: 640px;
+      line-height: 1.6;
+    }
+
+    /* ── Cards ── */
+    .card {
+      background: #1a2a3a;
+      border: 1px solid rgba(212, 160, 23, .14);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+
+    .card-light {
+      background: var(--card);
+      border-radius: 12px;
+      color: var(--text);
+      padding: 1.5rem;
+    }
+
+    /* ── Chart containers ── */
+    .chart-wrap {
+      position: relative;
+      width: 100%;
+      height: 320px;
+      max-height: 380px;
+    }
+
+    @media (max-width: 768px) {
+      .chart-wrap {
+        height: 240px;
+      }
+    }
+
+    /* ── Priority badges ── */
+    .badge {
+      display: inline-block;
+      font-size: .7rem;
+      font-weight: 700;
+      padding: .2rem .6rem;
+      border-radius: 999px;
+      letter-spacing: .05em;
+    }
+
+    .badge-gold {
+      background: rgba(212, 160, 23, .2);
+      color: var(--gold2);
+      border: 1px solid rgba(212, 160, 23, .4);
+    }
+
+    .badge-teal {
+      background: rgba(46, 196, 182, .15);
+      color: var(--teal);
+      border: 1px solid rgba(46, 196, 182, .35);
+    }
+
+    .badge-coral {
+      background: rgba(224, 90, 78, .15);
+      color: #f48a80;
+      border: 1px solid rgba(224, 90, 78, .35);
+    }
+
+    /* ── Accordion ── */
+    .acc-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.25rem;
+      cursor: pointer;
+      background: #1a2a3a;
+      border-radius: 10px;
+      border: 1px solid rgba(212, 160, 23, .14);
+      transition: background .2s;
+      user-select: none;
+    }
+
+    .acc-header:hover {
+      background: #1f3348;
+    }
+
+    .acc-header.open {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      border-color: rgba(212, 160, 23, .35);
+    }
+
+    .acc-body {
+      display: none;
+      background: #15222f;
+      border: 1px solid rgba(212, 160, 23, .2);
+      border-top: none;
+      border-radius: 0 0 10px 10px;
+      padding: 1.25rem;
+    }
+
+    .acc-body.open {
+      display: block;
+      animation: fadeUp .25s ease;
+    }
+
+    .acc-icon {
+      transition: transform .25s;
+      font-size: 1.2rem;
+      color: var(--gold);
+    }
+
+    .acc-icon.open {
+      transform: rotate(45deg);
+    }
+
+    /* ── Step list ── */
+    .step-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      counter-reset: steps;
+    }
+
+    .step-list li {
+      counter-increment: steps;
+      display: flex;
+      gap: .85rem;
+      margin-bottom: 1rem;
+      font-size: .9rem;
+      line-height: 1.6;
+      color: #c8d0dc;
+    }
+
+    .step-list li::before {
+      content: counter(steps);
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      color: var(--navy);
+      font-weight: 700;
+      font-size: .78rem;
+      min-width: 1.65rem;
+      height: 1.65rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: .1rem;
+    }
+
+    /* ── Code/formula ── */
+    .mono {
+      font-family: 'DM Mono', monospace;
+      background: rgba(46, 196, 182, .1);
+      color: var(--teal);
+      border: 1px solid rgba(46, 196, 182, .2);
+      padding: .15rem .45rem;
+      border-radius: 4px;
+      font-size: .82rem;
+    }
+
+    .formula-block {
+      font-family: 'DM Mono', monospace;
+      font-size: .82rem;
+      background: #0d1b2a;
+      color: var(--teal);
+      border-left: 3px solid var(--teal);
+      padding: .75rem 1rem;
+      border-radius: 4px;
+      margin: .5rem 0;
+      line-height: 1.8;
+    }
+
+    /* ── Info callout ── */
+    .callout {
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      font-size: .88rem;
+      line-height: 1.65;
+    }
+
+    .callout-gold {
+      background: rgba(212, 160, 23, .1);
+      border-left: 4px solid var(--gold);
+      color: #d4c79a;
+    }
+
+    .callout-teal {
+      background: rgba(46, 196, 182, .08);
+      border-left: 4px solid var(--teal);
+      color: #9de0da;
+    }
+
+    .callout-coral {
+      background: rgba(224, 90, 78, .1);
+      border-left: 4px solid var(--coral);
+      color: #f4a8a2;
+    }
+
+    .callout-warn {
+      background: linear-gradient(135deg, rgba(224, 90, 78, .15), rgba(224, 90, 78, .05));
+      border: 1px solid rgba(224, 90, 78, .35);
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      color: #f4b5af;
+    }
+
+    /* ── Dark matrix cards ── */
+    .matrix-card {
+      background: var(--navy);
+      border: 1px solid rgba(46, 196, 182, .25);
+      border-radius: 10px;
+      padding: 1.25rem;
+      text-align: center;
+    }
+
+    .matrix-card h4 {
+      font-family: 'DM Serif Display', serif;
+      color: var(--teal);
+      margin: 0 0 .5rem;
+      font-size: 1.05rem;
+    }
+
+    .matrix-card p {
+      font-size: .78rem;
+      color: #94a3b8;
+      margin: 0 0 .65rem;
+      line-height: 1.5;
+    }
+
+    .matrix-rule {
+      font-family: 'DM Mono', monospace;
+      font-size: .75rem;
+      color: var(--gold2);
+      background: rgba(212, 160, 23, .1);
+      border: 1px solid rgba(212, 160, 23, .25);
+      border-radius: 4px;
+      padding: .3rem .5rem;
+      display: inline-block;
+    }
+
+    /* ── Table ── */
+    .study-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .85rem;
+    }
+
+    .study-table th {
+      background: rgba(212, 160, 23, .12);
+      color: var(--gold2);
+      padding: .55rem .75rem;
+      text-align: left;
+      font-weight: 600;
+      letter-spacing: .04em;
+      font-size: .78rem;
+      border-bottom: 1px solid rgba(212, 160, 23, .2);
+    }
+
+    .study-table td {
+      padding: .55rem .75rem;
+      border-bottom: 1px solid rgba(255, 255, 255, .06);
+      color: #c8d0dc;
+      vertical-align: top;
+    }
+
+    .study-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .study-table tr:hover td {
+      background: rgba(255, 255, 255, .025);
+    }
+
+    /* ── Exam Paper ── */
+    .exam-paper {
+      background: #f9f7f3;
+      color: #1a1a2e;
+      border-radius: 12px;
+      padding: 2.5rem;
+      font-family: 'Georgia', serif;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, .4);
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .exam-paper h2 {
+      font-family: 'Georgia', serif;
+      margin: 0;
+    }
+
+    .exam-header {
+      text-align: center;
+      border-bottom: 2px solid #1a1a2e;
+      padding-bottom: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .exam-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: .83rem;
+      font-weight: 700;
+      margin-top: .75rem;
+    }
+
+    .exam-note {
+      text-align: center;
+      font-style: italic;
+      font-weight: 600;
+      font-size: .88rem;
+      margin-bottom: 1rem;
+      color: #374151;
+    }
+
+    .exam-row {
+      display: grid;
+      grid-template-columns: 2.5rem 1fr 3rem 2.5rem;
+      border-bottom: 1px solid #d1d5db;
+      padding: .75rem .5rem;
+      font-size: .87rem;
+      gap: .5rem;
+      align-items: start;
+    }
+
+    .exam-row.header {
+      font-weight: 700;
+      border-bottom: 2px solid #1a1a2e;
+      border-top: 2px solid #1a1a2e;
+      background: #f0ece4;
+    }
+
+    .exam-q-content {
+      display: flex;
+      flex-direction: column;
+      gap: .65rem;
+    }
+
+    .exam-q-part {
+      display: flex;
+      gap: .5rem;
+    }
+
+    .exam-marks {
+      text-align: center;
+      font-weight: 700;
+    }
+
+    .exam-co {
+      text-align: center;
+      color: #6b7280;
+    }
+
+    /* ── Priority stat cards ── */
+    .stat-card {
+      background: #1a2a3a;
+      border-radius: 12px;
+      padding: 1.25rem;
+      border: 1px solid rgba(212, 160, 23, .14);
+      transition: transform .2s, box-shadow .2s;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, .3);
+    }
+
+    .stat-number {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.5rem;
+      line-height: 1;
+    }
+
+    /* ── Scrollbar ── */
+    #main::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    #main::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    #main::-webkit-scrollbar-thumb {
+      background: rgba(212, 160, 23, .3);
+      border-radius: 4px;
+    }
+
+    /* ── Mobile top bar ── */
+    #topbar {
+      display: none;
+      background: var(--slate);
+      border-bottom: 1px solid rgba(212, 160, 23, .2);
+      padding: .75rem 1rem;
+    }
+
+    #topbar h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.1rem;
+      color: var(--gold2);
+      margin: 0 0 .5rem;
+    }
+
+    .topbar-nav {
+      display: flex;
+      gap: .4rem;
+      overflow-x: auto;
+      padding-bottom: .25rem;
+    }
+
+    .topbar-btn {
+      padding: .4rem .85rem;
+      border-radius: 999px;
+      border: 1px solid rgba(212, 160, 23, .3);
+      background: transparent;
+      color: #94a3b8;
+      font-size: .78rem;
+      font-family: 'Outfit', sans-serif;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all .2s;
+    }
+
+    .topbar-btn.active {
+      background: rgba(212, 160, 23, .2);
+      color: var(--gold2);
+      border-color: var(--gold);
+      font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        overflow: auto;
+        flex-direction: column;
+        height: auto;
+      }
+
+      #app {
+        flex-direction: column;
+        overflow: visible;
+      }
+
+      #sidebar {
+        display: none;
+      }
+
+      #topbar {
+        display: block;
+      }
+
+      #main {
+        overflow: visible;
+        padding: 1.25rem;
+      }
+    }
+
+    /* ── Grid helpers ── */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1rem;
+    }
+
+    @media (max-width: 900px) {
+
+      .grid-2,
+      .grid-3 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ── Divider ── */
+    .divider {
+      border: none;
+      border-top: 1px solid rgba(212, 160, 23, .12);
+      margin: 1.75rem 0;
+    }
+
+    /* ── Section header stripe ── */
+    .stripe-heading {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .stripe-heading h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.4rem;
+      color: #f0ece4;
+      margin: 0;
+    }
+
+    .stripe-heading .line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(212, 160, 23, .4), transparent);
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <!-- Sidebar -->
+    <aside id="sidebar">
+      <div class="sidebar-logo">
+        <h1>Mid-Term</h1>
+        <p>Exam Prep OS</p>
+      </div>
+
+      <div class="p-4" style="border-bottom: 1px solid rgba(212,160,23,0.15)">
+        <a href="index.html" class="nav-btn" style="color:var(--teal); margin:0;">
+          <span class="icon">↤</span> Back to Hub
+        </a>
+      </div>
+
+      <nav class="nav-links">
+        <div class="text-[0.65rem] text-slate-500 font-bold uppercase tracking-wider mb-2 px-3 mt-2 lg:mt-0">BS-202
+          Modules</div>
+
+        <button class="nav-btn active" onclick="switchTab('analytics-section', this)">
+          <span class="icon">📊</span> Analytics
+        </button>
+        <button class="nav-btn" onclick="switchTab('patterns-section', this)">
+          <span class="icon">🔍</span> Patterns
+        </button>
+        <button class="nav-btn" onclick="switchTab('study-guide-section', this)">
+          <span class="icon">📚</span> Study Guide
+        </button>
+        <button class="nav-btn" onclick="switchTab('exam-section', this)">
+          <span class="icon">📝</span> Predicted Exam
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        &copy; 2026 Academic Intel
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main id="main">
+      <header class="page-header">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="badge badge-gold">Paper Code: BS-202</span>
+          <span class="badge badge-teal">Compulsory</span>
+        </div>
+        <h2>Probability, Statistics and Linear Programming</h2>
+        <p>Units 1 & 2 • Faculty: Dr. Muskan Kapoor • GGSIPU • Predictive Analysis & Study Guide</p>
+      </header>
+
+      <!-- Analytics Section -->
+      <section id="analytics-section" class="section active">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+          <div class="card">
+            <h3 class="font-bold text-white text-lg mb-4 border-b border-[rgba(212,160,23,0.2)] pb-2">Historical Topic
+              Likelihood (%)</h3>
+            <div class="chart-wrap">
+              <canvas id="likelihoodChart"></canvas>
+            </div>
+          </div>
+          <div class="card">
+            <h3 class="font-bold text-white text-lg mb-4 border-b border-[rgba(212,160,23,0.2)] pb-2">Exam Marks
+              Distribution Strategy</h3>
+            <div class="chart-wrap">
+              <canvas id="marksChart"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <h3 class="font-bold text-white text-lg mb-4 border-b border-[rgba(212,160,23,0.2)] pb-2">Topic Analysis
+            Summary</h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-[rgba(30,58,138,0.2)] border border-[rgba(30,58,138,0.4)] p-4 rounded-xl">
+              <h4 class="font-bold text-[#60a5fa] text-md">90% Likelihood</h4>
+              <p class="text-[#93c5fd] text-sm mt-2">Bayes' Theorem & Conditional Probability. It is guaranteed as a
+                5-mark question in Q2 or Q3.</p>
+            </div>
+            <div class="bg-[rgba(236,72,153,0.2)] border border-[rgba(236,72,153,0.4)] p-4 rounded-xl">
+              <h4 class="font-bold text-[#f472b6] text-md">85% Likelihood</h4>
+              <p class="text-[#f9a8d4] text-sm mt-2">Standard Distributions. Specifically Normal (finding areas under
+                curve) and Poisson.</p>
+            </div>
+            <div class="bg-[rgba(139,92,246,0.2)] border border-[rgba(139,92,246,0.4)] p-4 rounded-xl">
+              <h4 class="font-bold text-[#a78bfa] text-md">80% Likelihood</h4>
+              <p class="text-[#c4b5fd] text-sm mt-2">Random Variables & PMF/PDF. Usually involves finding constant 'K'
+                or Moments.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Patterns Section -->
+      <section id="patterns-section" class="section">
+        <h3 class="font-bold text-white text-2xl mb-6">Top 3 Most Likely Topics & Solutions</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div class="card-light" style="background: rgba(255,255,255,0.02); color: #e8e4dc;">
+            <div class="text-xs font-bold uppercase tracking-wider mb-1" style="color: #60a5fa;">Topic 1</div>
+            <h4 class="text-xl font-bold mb-4">Bayes' Theorem</h4>
+            <div class="mb-4">
+              <strong class="text-white block mb-1">Common Pattern:</strong>
+              <p
+                class="text-sm text-[#94a3b8] p-3 rounded bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.1)]">
+                "A factory has 2/3 machines producing parts. X% are defective. A part is chosen randomly and is
+                defective. Find the probability it came from machine Y."</p>
+            </div>
+            <div>
+              <strong class="text-white block mb-1">Generic Solution Logic:</strong>
+              <ol class="list-decimal list-inside text-sm text-[#94a3b8] space-y-2">
+                <li><strong class="text-[#e8e4dc]">Define Prior Events:</strong> Let E&#8321;, E&#8322; be the machines.
+                  Define their probabilities P(E&#8321;), P(E&#8322;).</li>
+                <li><strong class="text-[#e8e4dc]">Define Outcome Event:</strong> Let A = "Item is defective".</li>
+                <li><strong class="text-[#e8e4dc]">Find Conditionals:</strong> Identify P(A|E&#8321;) and P(A|E&#8322;)
+                  from the text.</li>
+                <li><strong class="text-[#e8e4dc]">Apply Formula:</strong><br>
+                  <span
+                    class="math-text block mt-2 text-center font-bold bg-[rgba(96,165,250,0.1)] text-[#60a5fa] p-2 rounded">
+                    P(E&#8321;|A) = [P(E&#8321;)&middot;P(A|E&#8321;)] / [&#931; P(E&#x1D62;)&middot;P(A|E&#x1D62;)]
+                  </span>
+                </li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="card-light" style="background: rgba(255,255,255,0.02); color: #e8e4dc;">
+            <div class="text-xs font-bold uppercase tracking-wider mb-1" style="color: #f472b6;">Topic 2</div>
+            <h4 class="text-xl font-bold mb-4">Normal Distribution</h4>
+            <div class="mb-4">
+              <strong class="text-white block mb-1">Common Pattern:</strong>
+              <p
+                class="text-sm text-[#94a3b8] p-3 rounded bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.1)]">
+                "Items are normally distributed with mean &mu; and variance &sigma;&sup2;. Find percentage of items
+                having value > X or between X and Y."</p>
+            </div>
+            <div>
+              <strong class="text-white block mb-1">Generic Solution Logic:</strong>
+              <ol class="list-decimal list-inside text-sm text-[#94a3b8] space-y-2">
+                <li><strong class="text-[#e8e4dc]">Identify Parameters:</strong> Extract &mu; (mean) and &sigma;
+                  (standard deviation). <i>Careful: if variance is given, root it for &sigma;.</i></li>
+                <li><strong class="text-[#e8e4dc]">Standardize to Z:</strong> Convert the target value X to Z-score:<br>
+                  <span
+                    class="math-text block mt-1 text-center font-bold bg-[rgba(244,114,182,0.1)] text-[#f472b6] p-2 rounded">Z
+                    = (X - &mu;) / &sigma;</span>
+                </li>
+                <li><strong class="text-[#e8e4dc]">Lookup & Calculate:</strong> Use the provided Z-table values (e.g.,
+                  P(0&lt;z&lt;1)=0.3413) to find the area under the curve. Remember total area = 1, half = 0.5.</li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="card-light" style="background: rgba(255,255,255,0.02); color: #e8e4dc;">
+            <div class="text-xs font-bold uppercase tracking-wider mb-1" style="color: #f0c040;">Topic 3</div>
+            <h4 class="text-xl font-bold mb-4">PDFs & Constant 'K'</h4>
+            <div class="mb-4">
+              <strong class="text-white block mb-1">Common Pattern:</strong>
+              <p
+                class="text-sm text-[#94a3b8] p-3 rounded bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.1)]">
+                "Given probability density function f(x,y) = K(x+y) for 0&lt;x&lt;1. Find K, and find P(X &lt; 0.5)."
+              </p>
+            </div>
+            <div>
+              <strong class="text-white block mb-1">Generic Solution Logic:</strong>
+              <ol class="list-decimal list-inside text-sm text-[#94a3b8] space-y-2">
+                <li><strong class="text-[#e8e4dc]">The Core Axiom:</strong> The total probability over the entire domain
+                  must equal exactly 1.</li>
+                <li><strong class="text-[#e8e4dc]">Integrate/Sum:</strong> Set up the double integral (for joint
+                  continuous) or single integral:<br>
+                  <span
+                    class="math-text block mt-1 text-center font-bold bg-[rgba(240,192,64,0.1)] text-[#f0c040] p-2 rounded">&int;
+                    &int; f(x,y) dx dy = 1</span>
+                </li>
+                <li><strong class="text-[#e8e4dc]">Solve for K:</strong> Evaluate the integral with the given limits,
+                  equate to 1, and isolate K algebraically.</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="font-bold text-white text-xl mb-4 text-center border-b border-[rgba(212,160,23,0.2)] pb-4">Process
+            Flow: Solving Bayes' Theorem (Exam Strategy)</h3>
+          <div class="flex flex-col md:flex-row justify-center items-center gap-4 text-center py-6">
+            <!-- Step 1 -->
+            <div class="bg-[rgba(139,92,246,0.15)] border border-[#a78bfa] rounded-lg p-4 w-full md:w-48 shadow-sm">
+              <div class="font-bold text-[#c4b5fd] mb-1">Step 1</div>
+              <div class="text-sm text-[#e8e4dc]">Identify all 'Base' Events (e.g. Machines A, B) & calculate
+                P(E&#x1D62;)</div>
+            </div>
+
+            <div class="text-[#a78bfa] text-2xl font-bold md:-rotate-90 md:mt-0 mt-2 rotate-90">&#10140;</div>
+
+            <!-- Step 2 -->
+            <div class="bg-[rgba(139,92,246,0.15)] border border-[#a78bfa] rounded-lg p-4 w-full md:w-48 shadow-sm">
+              <div class="font-bold text-[#c4b5fd] mb-1">Step 2</div>
+              <div class="text-sm text-[#e8e4dc]">Identify the 'Observed' Event (e.g. Defective Item)</div>
+            </div>
+
+            <div class="text-[#a78bfa] text-2xl font-bold md:-rotate-90 md:mt-0 mt-2 rotate-90">&#10140;</div>
+
+            <!-- Step 3 -->
+            <div class="bg-[rgba(139,92,246,0.15)] border border-[#a78bfa] rounded-lg p-4 w-full md:w-48 shadow-sm">
+              <div class="font-bold text-[#c4b5fd] mb-1">Step 3</div>
+              <div class="text-sm text-[#e8e4dc]">Extract Conditional Probabilities P(Observed|Base)</div>
+            </div>
+
+            <div class="text-[#a78bfa] text-2xl font-bold md:-rotate-90 md:mt-0 mt-2 rotate-90">&#10140;</div>
+
+            <!-- Step 4 -->
+            <div class="bg-[rgba(139,92,246,0.4)] border border-[#c4b5fd] rounded-lg p-4 w-full md:w-48 shadow-lg">
+              <div class="font-bold text-white mb-1">Step 4</div>
+              <div class="text-sm text-white">Multiply branches & Divide specific branch by total sum.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Study Guide Section -->
+      <section id="study-guide-section" class="section">
+        <h3 class="font-bold text-white text-2xl mb-6">Course Syllabus (Units 1 & 2)</h3>
+        <div class="card mb-8">
+          <h4 class="font-bold text-[#f0c040] text-lg mb-2">Unit I</h4>
+          <div class="space-y-4 text-sm text-[#94a3b8] mb-6">
+            <p><span class="font-semibold text-white">Basics:</span> Probability and Statistical models, Sample Spaces
+              and Events, Counting Techniques, Interpretations and Axioms of Probability, Unions of Events and Addition
+              Rules, Conditional Probability, Intersections of Events and Multiplication and Total Probability Rules,
+              Independence, Bayes' Theorem, Random Variables.</p>
+            <p><span class="font-semibold text-white">Discrete and Continuous Random Variables and Distributions:</span>
+              Probability Distributions and Probability Mass / density Functions, Cumulative Distribution Functions,
+              Mean and Variance of a Random Variable, Discrete and continuous Uniform Distribution, Binomial
+              Distribution, Geometric and Negative Binomial Distributions, Hypergeometric Distribution, Poisson
+              Distribution, Normal Distribution, Normal Approximation to the Binomial, and Poisson Distributions;
+              Exponential Distribution, Erlang and Gamma Distributions, Weibull Distribution, Lognormal Distribution,
+              Beta Distribution.</p>
+          </div>
+
+          <h4 class="font-bold text-[#f0c040] text-lg mb-2 border-t border-[rgba(212,160,23,0.2)] pt-4">Unit II</h4>
+          <div class="space-y-4 text-sm text-[#94a3b8]">
+            <p>Joint Probability Distributions for Two Random Variables, Conditional Probability Distributions and
+              Independence, Joint Probability Distributions for Two Random Variables, Covariance and Correlation, Common
+              Joint Distributions, Linear Functions of Random Variables, General Functions of Random Variables,
+              Moment-Generating Functions.</p>
+            <p>Numerical Summaries of Data, Stem-and-Leaf Diagrams, Frequency Distributions and Histograms, Box Plots,
+              Time Sequence Plots, Scatter Diagrams, Probability Plots. Point Estimation, Sampling Distributions and the
+              Central Limit Theorem without proof, General Concepts of Point Estimation, Methods of Point Estimation,
+              Statistical Intervals for a Single Sample.</p>
+          </div>
+        </div>
+
+        <!-- PYQ Section -->
+        <h3 class="font-bold text-white text-2xl mb-4">Download Original PDF Papers</h3>
+        <div class="flex flex-wrap gap-3 mb-8">
+          <a href="assets/pdfs/PSLP/PSLP_Mid_Term_May_2023.pdf" download="PSLP_Mid_Term_May_2023.pdf" target="_blank"
+            class="bg-[rgba(212,160,23,0.15)] hover:bg-[rgba(212,160,23,0.3)] text-[#d4c79a] border border-[rgba(212,160,23,0.35)] px-4 py-2 rounded-lg text-sm font-medium shadow-sm transition-colors flex items-center gap-2">
+            <svg class="w-4 h-4" style="width:1rem;height:1rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+              </path>
+            </svg>
+            May 2023
+          </a>
+          <a href="assets/pdfs/PSLP/PSLP_Mid_Term_November_2023.pdf" download="PSLP_Mid_Term_November_2023.pdf" target="_blank"
+            class="bg-[rgba(212,160,23,0.15)] hover:bg-[rgba(212,160,23,0.3)] text-[#d4c79a] border border-[rgba(212,160,23,0.35)] px-4 py-2 rounded-lg text-sm font-medium shadow-sm transition-colors flex items-center gap-2">
+            <svg class="w-4 h-4" style="width:1rem;height:1rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+              </path>
+            </svg>
+            Nov 2023
+          </a>
+          <a href="assets/pdfs/PSLP/PSLP_Mid_Term_April_2024.pdf" download="PSLP_Mid_Term_April_2024.pdf" target="_blank"
+            class="bg-[rgba(212,160,23,0.15)] hover:bg-[rgba(212,160,23,0.3)] text-[#d4c79a] border border-[rgba(212,160,23,0.35)] px-4 py-2 rounded-lg text-sm font-medium shadow-sm transition-colors flex items-center gap-2">
+            <svg class="w-4 h-4" style="width:1rem;height:1rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+              </path>
+            </svg>
+            April 2024
+          </a>
+          <a href="assets/pdfs/PSLP/PSLP_Mid_Term_March_2025.pdf" download="PSLP_Mid_Term_March_2025.pdf" target="_blank"
+            class="bg-[rgba(212,160,23,0.15)] hover:bg-[rgba(212,160,23,0.3)] text-[#d4c79a] border border-[rgba(212,160,23,0.35)] px-4 py-2 rounded-lg text-sm font-medium shadow-sm transition-colors flex items-center gap-2">
+            <svg class="w-4 h-4" style="width:1rem;height:1rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+              </path>
+            </svg>
+            March 2025
+          </a>
+        </div>
+
+        <h3 class="font-bold text-white text-2xl mb-6 border-t border-[rgba(212,160,23,0.2)] pt-8">PYQs Analysis
+          (2023-2025)</h3>
+        <div class="space-y-3">
+
+                    <div class="acc-group">
+            <div class="acc-header" onclick="toggleAcc(this)">
+              <span class="font-semibold">Topic 1: Bayes' Theorem &amp; Conditional Prob.</span>
+              <span class="acc-icon">+</span>
+            </div>
+            <div class="acc-body">
+              <ul class="step-list text-[#94a3b8] text-sm space-y-3">
+                <li><strong style="color:#d4c79a">[Q1(a), April 2024]</strong> "Two bolts are drawn from a box containing 6 good and 8 defective bolts. Find the probability that the second bolt is good if the first one is found to be defective."</li>
+                <li><strong style="color:#d4c79a">[Q2(a), Nov 2023]</strong> "A factory has 2 plants. Records shows that the plant 1 produces 30% and plant 2 produces 70% items. Further 5% of the items produced by plant 1 are defective while 1% produced by plant 2 are defective. If a defective item is drawn at random, find the probability that the defective item was produced by: (i) Plant 1 (ii) Plant 2."</li>
+                <li><strong style="color:#d4c79a">[Q2(a), March 2025]</strong> "There are three bags: the First contains 1 white, 2 red, and 3 black balls; the second contains 2 white, 3 red, and 1 black balls; and the third contains 3 white, 1 red, and 2 black balls. Two balls are drawn from a bag chosen at random. These are found to be one white and one red. Find the probability that the balls so drawn came from the second bag."</li>
+                <li><strong style="color:#d4c79a">[Q2(a), May 2023]</strong> "In a toy factory, machines A, B, C manufacture 25%, 35%, 40%. Defect rates 5%, 4%, 2%. Find the probability that a toy is defective, and the probability it was produced by A."</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="acc-group">
+            <div class="acc-header" onclick="toggleAcc(this)">
+              <span class="font-semibold">Topic 2: Normal, Poisson &amp; Binomial Distributions</span>
+              <span class="acc-icon">+</span>
+            </div>
+            <div class="acc-body">
+              <ul class="step-list text-[#94a3b8] text-sm space-y-3">
+                <li><strong style="color:#d4c79a">[Q3(a), April 2024]</strong> "In a sample of 1000 cases, the mean of a certain test is 14 and deviation is 2.5. Assuming the distribution to be normal, find: (i) How many students score between 12 and 15? (ii) How many score below 8? (iii) How many score above 16?"</li>
+                <li><strong style="color:#d4c79a">[Q1(a), March 2025]</strong> "Find the binomial distribution for which mean = 2(variance) and mean + variance = 3, and find P(X &le; 3)."</li>
+                <li><strong style="color:#d4c79a">[Q3(a), May 2023]</strong> "In a normal distribution, 7% of the items are under 35 and 89% are under 63. Find the mean and S.D."</li>
+                <li><strong style="color:#d4c79a">[Q1(e), Nov 2023]</strong> "X is a Poisson variable and it is found that the probability at X=2 is 2/3 of the probability at X=1. Find the probability at X=3."</li>
+                <li><strong style="color:#d4c79a">[Q4(a), Nov 2023]</strong> "If the heights of 300 students are normally distributed with mean 68 inch and standard deviation 3 inch. How many students have height: (i) Greater than 72 inches (ii) Between 65 and 71 inches."</li>
+                <li><strong style="color:#d4c79a">[Q4(a), April 2024]</strong> "An insurance company found that only 0.01% of the population is involved in a certain type of accident each year. If its 1000 policy holders were randomly selected, what is the probability that not more than two of its clients are involved in such an accident next year?"</li>
+                <li><strong style="color:#d4c79a">[Q1(b), March 2025]</strong> "A manufacturer produces medicine bottles and finds that 0.1% of bottles are defective. The bottles are packed in boxes containing 500 bottles. Find that in 100 such boxes are expected to contain no defective bottles."</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="acc-group">
+            <div class="acc-header" onclick="toggleAcc(this)">
+              <span class="font-semibold">Topic 3: Random Variables, PDFs &amp; Constant 'K'</span>
+              <span class="acc-icon">+</span>
+            </div>
+            <div class="acc-body">
+              <ul class="step-list text-[#94a3b8] text-sm space-y-3">
+                <li><strong style="color:#d4c79a">[Q1(b), April 2024]</strong> "Find the value of k and mean value of X. If X is continuous random variable with probability density function given by f(x) = kx (0&le;x&lt;2) and 2k (2&le;x&le;4). Then find the expectation E(x) and E(x&sup2;)."</li>
+                <li><strong style="color:#d4c79a">[Q2(b), March 2025]</strong> "Find k so that f(x, y) = kxy, 1 &lt; x &le; y &le; 2 will be a joint probability density function."</li>
+                <li><strong style="color:#d4c79a">[Q4(a), May 2023]</strong> "Three fair coins are tossed. Let X denote the number of heads on the first two coins, Let Y denote the number of tails on the last two coins. Find (i) the joint distribution of X and Y (ii) the conditional distribution of Y given that X=1."</li>
+                <li><strong style="color:#d4c79a">[Q2(b), Nov 2023]</strong> "A random variable X has the probability mass function P(r) = r/15 for x = 1,2,3,4,5, otherwise 0. Find (i) P{X=1 or 2} (ii) P{1/2 &lt; X &lt; 5/2 | X&gt;1}."</li>
+                <li><strong style="color:#d4c79a">[Q1(d), March 2025]</strong> "The probability density function of a variate X is P(X): K, 3K, 5K, 7K, 9K, 11K, 13K for X: 0,1,2,3,4,5,6. Find (i) P(X&lt;4) (ii) P(3&lt;X&le;6) (iii) What will be the minimum value of k so that P(X&le;2)&gt;3."</li>
+                <li><strong style="color:#d4c79a">[Q1(d), Nov 2023]</strong> "Find the moment generating function (m.g.f. about origin) of the exponential distribution f(x) = &lambda;e^(-&lambda;x), 0&le;x&le;&infin;."</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="acc-group">
+            <div class="acc-header" onclick="toggleAcc(this)">
+              <span class="font-semibold">Topic 4: Correlation, Moments &amp; Summaries</span>
+              <span class="acc-icon">+</span>
+            </div>
+            <div class="acc-body">
+              <ul class="step-list text-[#94a3b8] text-sm space-y-3">
+                <li><strong style="color:#d4c79a">[Q4(b), March 2025]</strong> "Find the coefficient of correlation for 6 college students who got the following percentage of marks in Economics and Statistics."</li>
+                <li><strong style="color:#d4c79a">[Q1(c), March 2025]</strong> "Calculate the covariance of the following pairs of observations of the variables X and Y: (15,44), (20,43), (25,45), (30,37), (40,34), (50,37)."</li>
+                <li><strong style="color:#d4c79a">[Q3(b), May 2023]</strong> "The ages of Boys and Girls are given in the following table. Calculate the coefficient of correlation between X and Y."</li>
+                <li><strong style="color:#d4c79a">[Q3(b), Nov 2023]</strong> "In a distribution, the mean is 10, variance is 10, skewness is 1 and kurtosis is 4. Obtain the first four moments about origin. Comment upon the nature of distribution."</li>
+                <li><strong style="color:#d4c79a">[Q4(b), Nov 2023]</strong> "Obtain the rank correlation coefficient between the variables X and Y from the following pairs of observed data."</li>
+                <li><strong style="color:#d4c79a">[Q1(c), April 2024]</strong> "If X and Y are jointly distributed random variables, then prove that Var(X+Y) = Var(X) + Var(Y) + 2Cov(X,Y)."</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Predicted Exam Section -->
+      <section id="exam-section" class="section">
+
+        <h2 class="text-3xl font-bold text-[#e8e4dc] dark:text-[#e8e4dc] mb-8 text-center border-b-2 pb-4">Predicted
+          Mid-Term Question
+          Paper</h2>
+        <p class="text-center text-[#94a3b8] dark:text-[#64748b] mb-8 max-w-2xl mx-auto">This paper structure is
+          synthesized directly
+          from the May 2023 and Nov 2023 past papers, maintaining the exact weightage, difficulty, and format (1
+          compulsory question + choose 2 from 3 long questions).</p>
+        <div
+          class="bg-[#1a2a3a] dark:bg-[#1a2a3a] dark:border-[rgba(212,160,23,0.14)] rounded-none md:rounded-xl shadow-2xl p-6 md:p-12 border border-[rgba(212,160,23,0.14)] dark:border-[rgba(212,160,23,0.14)] font-serif">
+          <div class="text-center mb-8 border-b-2 border-black dark:border-gray-500 pb-4">
+            <h3 class="text-xl font-bold uppercase">Mid Term Examination</h3>
+            <h4 class="text-lg font-semibold mt-1">B.Tech Programmes</h4>
+            <p class="mt-2 text-sm">Subject: <span class="font-bold">Probability, Statistics and Linear
+                programming</span></p>
+            <div class="flex justify-between mt-4 text-sm font-bold">
+              <span>Time: 1.5 Hrs.</span>
+              <span>Max. Marks: 30</span>
+            </div>
+            <p class="mt-4 text-left italic text-sm">Note: Attempt Q. No. 1 which is compulsory and any two more
+              questions from the remaining.</p>
+          </div>
+          <div class="space-y-6">
+            <div class="mb-6">
+              <div class="flex justify-between font-bold text-lg mb-2">
+                <span>Q1. Attempt all parts:</span>
+                <span>(4 x 2.5 = 10 Marks)</span>
+              </div>
+              <div class="space-y-4 pl-4 text-[#e8e4dc] dark:text-[#e8e4dc]">
+                <p><strong>(a)</strong> If a random variable X has the PDF <span class="math-text">f(x) =
+                    cx²</span> for <span class="math-text">0 ≤ x ≤ 2</span> and 0 otherwise.
+                  Find the value of constant 'c'.</p>
+                <p><strong>(b)</strong> X is a Poisson variable and it is found that the probability at
+                  <span class="math-text">X=2</span> is twice the probability at <span class="math-text">X=1</span>.
+                  Find the probability at <span class="math-text">x=0</span>.
+                </p>
+                <p><strong>(c)</strong> Briefly define a probability space with a relevant engineering
+                  example.</p>
+                <p><strong>(d)</strong> A die is thrown twice and the sum of the numbers appearing is
+                  observed to be 7. What is the conditional probability that the number 3 has appeared at
+                  least once?</p>
+              </div>
+            </div>
+            <div class="border-t border-[rgba(212,160,23,0.14)] pt-6 mb-6">
+              <div class="flex justify-between font-bold text-lg mb-2">
+                <span>Q2.</span>
+                <span>(10 Marks)</span>
+              </div>
+              <div class="pl-4 text-[#e8e4dc] dark:text-[#e8e4dc] space-y-4">
+                <p>A manufacturing company has three plants A, B, and C. Plant A produces 40% of the
+                  company's output, Plant B produces 35%, and Plant C produces 25%. Records show that 2%
+                  of the items produced by A, 3% of items produced by B, and 4% of items produced by C are
+                  defective.</p>
+                <p>If an item is drawn at random from the total output and is found to be defective, find
+                  the probability that it was produced by Plant B.</p>
+              </div>
+            </div>
+            <div class="border-t border-[rgba(212,160,23,0.14)] pt-6 mb-6">
+              <div class="flex justify-between font-bold text-lg mb-2">
+                <span>Q3.</span>
+                <span>(10 Marks)</span>
+              </div>
+              <div class="pl-4 text-[#e8e4dc] dark:text-[#e8e4dc]">
+                <p>A sample of 500 electronic components was tested to find their lifespan. The results
+                  produced a mean lifespan of <span class="math-text">μ = 15</span> hours and a
+                  variance of 4 hours. Assuming the data is normally distributed, determine the number of
+                  components expected to have a lifespan of:</p>
+                <ul class="list-[lower-roman] list-inside mt-2 space-y-1 ml-4">
+                  <li>More than 18 hours</li>
+                  <li>Between 13 and 17 hours</li>
+                </ul>
+                <p class="mt-2 text-sm italic">(Given that P(0 &lt; z &lt; 1.5) = 0.4332, P(0 &lt; z &lt; 1)
+                  = 0.3413)</p>
+              </div>
+            </div>
+            <div class="border-t border-[rgba(212,160,23,0.14)] pt-6">
+              <div class="flex justify-between font-bold text-lg mb-2">
+                <span>Q4.</span>
+                <span>(10 Marks)</span>
+              </div>
+              <div class="pl-4 text-[#e8e4dc] dark:text-[#e8e4dc] space-y-4">
+                <p><strong>(a)</strong> For a distribution, the mean is 12, variance is 9, γ₁
+                  (skewness) is 0.5 and β₂ (kurtosis) is 3. Obtain the first four moments about
+                  the origin. (5 Marks)</p>
+                <p><strong>(b)</strong> Find the coefficient of correlation for 5 students who got the
+                  following marks in Mathematics and Physics: (5 Marks)</p>
+                <div class="overflow-x-auto mt-2">
+                  <table
+                    class="w-full max-w-sm text-center border-collapse border border-[rgba(212,160,23,0.14)] dark:border-[rgba(212,160,23,0.14)]">
+                    <thead>
+                      <tr class="bg-[#15222f] dark:bg-[#1a2a3a]">
+                        <th class="border border-[rgba(212,160,23,0.14)] dark:border-[rgba(212,160,23,0.14)] px-4 py-2">
+                          Maths</th>
+                        <th class="border border-[rgba(212,160,23,0.14)] dark:border-[rgba(212,160,23,0.14)] px-4 py-2">
+                          Physics
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="border border-[rgba(212,160,23,0.14)] dark:border-[rgba(212,160,23,0.14)] px-4 py-1">
+                          15</td>
+                        <td class="border border-[rgba(212,160,23,0.14)] dark:border-[rgba(212,160,23,0.14)] px-4 py-1">
+                          10</td>
+                      </tr>
+                      <tr>
+                        <td class="border border-[rgba(212,160,23,0.14)] dark:border-[rgba(212,160,23,0.14)] px-4 py-1">
+                          20</td>
+                        <td class="border border-[rgba(212,160,23,0.14)] dark:border-[rgba(212,160,23,0.14)] px-4 py-1">
+                          15</td>
+                      </tr>
+                      <tr>
+                        <td class="border border-[rgba(212,160,23,0.14)] dark:border-[rgba(212,160,23,0.14)] px-4 py-1">
+                          25</td>
+                        <td class="border border-[rgba(212,160,23,0.14)] dark:border-[rgba(212,160,23,0.14)] px-4 py-1">
+                          20</td>
+                      </tr>
+                      <tr>
+                        <td class="border border-[rgba(212,160,23,0.14)] dark:border-[rgba(212,160,23,0.14)] px-4 py-1">
+                          30</td>
+                        <td class="border border-[rgba(212,160,23,0.14)] dark:border-[rgba(212,160,23,0.14)] px-4 py-1">
+                          25</td>
+                      </tr>
+                      <tr>
+                        <td class="border border-[rgba(212,160,23,0.14)] dark:border-[rgba(212,160,23,0.14)] px-4 py-1">
+                          35</td>
+                        <td class="border border-[rgba(212,160,23,0.14)] dark:border-[rgba(212,160,23,0.14)] px-4 py-1">
+                          30</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <h2 class="text-3xl font-bold text-[#e8e4dc] dark:text-[#e8e4dc] mt-16 mb-8 text-center border-b-2 pb-4">
+          Predicted
+          Mid-Term Question
+          Paper (Variant II)</h2>
+        <p class="text-center text-[#94a3b8] dark:text-[#64748b] mb-8 max-w-2xl mx-auto">This alternate paper
+          structure explores additional predicted high-yield topics based on the exhaustive analysis of previous
+          semesters' examination patterns.</p>
+        <div
+          class="bg-[#1a2a3a] dark:bg-[#1a2a3a] dark:border-[rgba(212,160,23,0.14)] rounded-none md:rounded-xl shadow-2xl p-6 md:p-12 border border-[rgba(212,160,23,0.14)] dark:border-[rgba(212,160,23,0.14)] font-serif">
+          <div class="text-center mb-8 border-b-2 border-black dark:border-gray-500 pb-4">
+            <h3 class="text-xl font-bold uppercase">Mid Term Examination</h3>
+            <h4 class="text-lg font-semibold mt-1">B.Tech Programmes (Under the Aegis of USICT)</h4>
+            <p class="mt-2 text-sm">Semester: Third / Fourth  |  Paper Code: BS-202</p>
+            <p class="mt-1 text-sm">Subject: <span class="font-bold">Probability, Statistics and Linear
+                Programming</span></p>
+            <div class="flex justify-between mt-4 text-sm font-bold">
+              <span>Time: 1½ Hrs.</span>
+              <span>Max. Marks: 30</span>
+            </div>
+            <p class="mt-4 text-left italic text-sm">Note: Attempt Q. No. 1 which is compulsory and any two more
+              questions from the remaining. Only scientific calculators are allowed.</p>
+          </div>
+          <div class="space-y-6">
+            <div class="mb-6">
+              <div class="flex justify-between font-bold text-lg mb-2">
+                <span>Q1. Answer the following compulsory questions:</span>
+                <span>(4 × 2.5 = 10 Marks)</span>
+              </div>
+              <div class="space-y-4 pl-4 text-[#e8e4dc] dark:text-[#e8e4dc]">
+                <p><strong>(a)</strong> In a highly automated manufacturing process, the historical
+                  probability of producing a defective sensor is 0.005. If these sensors are packaged and
+                  shipped in boxes of 400 units, utilize the Poisson approximation of the Binomial
+                  distribution to calculate the precise probability that a randomly selected shipment box
+                  contains exactly one defective sensor. (Given <span class="math-text">e<sup>-2</sup> =
+                    0.1353</span>)</p>
+                <p><strong>(b)</strong> Determine the specific mathematical constant K such that the
+                  function <span class="math-text">f(x, y) = K(x² + y²)</span> defined strictly
+                  within the continuous bounds <span class="math-text">0 &lt; x &lt; 1</span> and <span
+                    class="math-text">0 &lt; y &lt; 1</span> serves as a valid joint probability density
+                  function.</p>
+                <p><strong>(c)</strong> For a given discrete Binomial distribution, mathematical analysis
+                  reveals that the mean evaluates to 4 and the statistical variance evaluates to 1.2.
+                  Determine the fundamental parameters <span class="math-text">n</span> (number of trials)
+                  and <span class="math-text">p</span> (probability of success) of this distribution.
+                  Subsequently, calculate the exact probability <span class="math-text">P(X = 0)</span>.
+                </p>
+                <p><strong>(d)</strong> Define the Moment Generating Function (MGF) mathematically. State
+                  its primary utility in advanced statistical analysis, and formally prove that the first
+                  derivative of the MGF with respect to <span class="math-text">t</span>, when evaluated
+                  exactly at <span class="math-text">t=0</span>, yields the mathematical expectation
+                  (mean) of the distribution.</p>
+              </div>
+            </div>
+            <div class="border-t border-[rgba(212,160,23,0.14)] pt-6 mb-6">
+              <div class="flex justify-between font-bold text-lg mb-2">
+                <span>Q2. Attempt the following:</span>
+                <span>(5 + 5 = 10 Marks)</span>
+              </div>
+              <div class="pl-4 text-[#e8e4dc] dark:text-[#e8e4dc] space-y-4">
+                <p><strong>(a)</strong> A corporate IT infrastructure relies on three primary servers (A, B,
+                  and C) which process 40%, 35%, and 25% of the total internal network traffic,
+                  respectively. Extensive diagnostic logs indicate that the probability a data packet is
+                  catastrophically dropped by Server A is 2%, by Server B is 3%, and by Server C is 5%. A
+                  network engineer operating at an endpoint discovers a dropped packet. Utilizing Bayes'
+                  Theorem, calculate the exact probability that this specific dropped packet was processed
+                  and subsequently dropped by Server B.</p>
+                <div class="mt-4">
+                  <strong>(b)</strong> A continuous random variable, denoted as X, possesses a probability
+                  density function defined by the following piecewise polynomial expression:
+                  <div
+                    class="math-text mt-2 text-center bg-[#15222f] dark:bg-[#15222f] border border-[rgba(212,160,23,0.14)] dark:border-[rgba(212,160,23,0.14)] py-2 rounded">
+                    f(x) = C(4x - 2x²) for 0 &lt; x &lt; 2<br />
+                    f(x) = 0 otherwise
+                  </div>
+                  Execute the following computations:
+                  <ul class="list-[lower-roman] list-inside mt-2 space-y-1 ml-4 text-sm">
+                    <li>Determine the required value of the constant C to validate the PDF.</li>
+                    <li>Calculate the Expected Value, E[X], of the distribution.</li>
+                    <li>Calculate the specific geometric probability P(X &gt; 1).</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="border-t border-[rgba(212,160,23,0.14)] pt-6 mb-6">
+              <div class="flex justify-between font-bold text-lg mb-2">
+                <span>Q3. Attempt the following:</span>
+                <span>(5 + 5 = 10 Marks)</span>
+              </div>
+              <div class="pl-4 text-[#e8e4dc] dark:text-[#e8e4dc]">
+                <p><strong>(a)</strong> The joint probability distribution mapping two discrete random
+                  variables, X and Y, is provided by the following statistical matrix:</p>
+                <div class="overflow-x-auto mt-4 mb-4 flex justify-center">
+                  <table
+                    class="text-center border-collapse border border-[rgba(212,160,23,0.14)] dark:border-[rgba(212,160,23,0.14)]">
+                    <thead>
+                      <tr class="bg-[#15222f] dark:bg-[#1a2a3a]">
+                        <th class="border border-[rgba(212,160,23,0.14)] dark:border-[rgba(212,160,23,0.14)] px-4 py-2">
+                          X ↓ \
+                          Y →</th>
+                        <th class="border border-[rgba(212,160,23,0.14)] dark:border-[rgba(212,160,23,0.14)] px-4 py-2">
+                          1</th>
+                        <th class="border border-[rgba(212,160,23,0.14)] dark:border-[rgba(212,160,23,0.14)] px-4 py-2">
+                          2</th>
+                        <th class="border border-[rgba(212,160,23,0.14)] dark:border-[rgba(212,160,23,0.14)] px-4 py-2">
+                          3</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th
+                          class="border border-[rgba(212,160,23,0.14)] dark:border-[rgba(212,160,23,0.14)] px-4 py-1 bg-[#15222f] dark:bg-[#15222f]">
+                          0</th>
+                        <td class="border border-[rgba(212,160,23,0.14)] dark:border-[rgba(212,160,23,0.14)] px-4 py-1">
+                          0.10</td>
+                        <td class="border border-[rgba(212,160,23,0.14)] dark:border-[rgba(212,160,23,0.14)] px-4 py-1">
+                          0.15</td>
+                        <td class="border border-[rgba(212,160,23,0.14)] dark:border-[rgba(212,160,23,0.14)] px-4 py-1">
+                          0.05</td>
+                      </tr>
+                      <tr>
+                        <th
+                          class="border border-[rgba(212,160,23,0.14)] dark:border-[rgba(212,160,23,0.14)] px-4 py-1 bg-[#15222f] dark:bg-[#15222f]">
+                          1</th>
+                        <td class="border border-[rgba(212,160,23,0.14)] dark:border-[rgba(212,160,23,0.14)] px-4 py-1">
+                          0.20</td>
+                        <td class="border border-[rgba(212,160,23,0.14)] dark:border-[rgba(212,160,23,0.14)] px-4 py-1">
+                          0.30</td>
+                        <td class="border border-[rgba(212,160,23,0.14)] dark:border-[rgba(212,160,23,0.14)] px-4 py-1">
+                          0.20</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p>Based on this matrix, systematically compute the following:</p>
+                <ul class="list-[lower-roman] list-inside mt-2 space-y-1 ml-4 text-sm mb-4">
+                  <li>The independent marginal probability distributions of X and Y.</li>
+                  <li>The conditional probability distribution of X, strictly given that Y=2.</li>
+                  <li>The conditional expectation of X, given Y=2.</li>
+                </ul>
+                <p><strong>(b)</strong> The operational lifespan of a specific industrial-grade electronic
+                  relay is established to be normally distributed, possessing a population mean of 500
+                  hours and a standard deviation of 40 hours. Calculate the precise probability that a
+                  randomly selected relay drawn from the production line will exhibit an operational
+                  lifespan:</p>
+                <ul class="list-[lower-roman] list-inside mt-2 space-y-1 ml-4 text-sm">
+                  <li>Falling strictly between 460 hours and 560 hours.</li>
+                  <li>Exceeding 580 hours.</li>
+                </ul>
+                <p class="mt-2 text-xs italic text-gray-500">(Given reference values: P(0 ≤ Z ≤ 1.0) =
+                  0.3413, P(0 ≤ Z ≤ 1.5) = 0.4332, P(0 ≤ Z ≤ 2.0) = 0.4772)</p>
+              </div>
+            </div>
+            <div class="border-t border-[rgba(212,160,23,0.14)] pt-6">
+              <div class="flex justify-between font-bold text-lg mb-2">
+                <span>Q4. Attempt the following:</span>
+                <span>(5 + 5 = 10 Marks)</span>
+              </div>
+              <div class="pl-4 text-[#e8e4dc] dark:text-[#e8e4dc] space-y-4">
+                <p><strong>(a)</strong> An engineering study investigating the yield of a complex chemical
+                  process (Y) in direct relation to its operating temperature (X) records data across six
+                  independent experimental trials. The findings are as follows:</p>
+                <div class="overflow-x-auto mt-2 mb-2 flex justify-center">
+                  <table
+                    class="w-full max-w-md text-center border-collapse border border-[rgba(212,160,23,0.14)] dark:border-[rgba(212,160,23,0.14)] text-sm md:text-base">
+                    <thead>
+                      <tr class="bg-[#15222f] dark:bg-[#1a2a3a]">
+                        <th
+                          class="border border-[rgba(212,160,23,0.14)] dark:border-[rgba(212,160,23,0.14)] px-2 md:px-4 py-2">
+                          Variable X (Temperature)</th>
+                        <th
+                          class="border border-[rgba(212,160,23,0.14)] dark:border-[rgba(212,160,23,0.14)] px-2 md:px-4 py-2">
+                          10
+                        </th>
+                        <th
+                          class="border border-[rgba(212,160,23,0.14)] dark:border-[rgba(212,160,23,0.14)] px-2 md:px-4 py-2">
+                          15
+                        </th>
+                        <th
+                          class="border border-[rgba(212,160,23,0.14)] dark:border-[rgba(212,160,23,0.14)] px-2 md:px-4 py-2">
+                          20
+                        </th>
+                        <th
+                          class="border border-[rgba(212,160,23,0.14)] dark:border-[rgba(212,160,23,0.14)] px-2 md:px-4 py-2">
+                          25
+                        </th>
+                        <th
+                          class="border border-[rgba(212,160,23,0.14)] dark:border-[rgba(212,160,23,0.14)] px-2 md:px-4 py-2">
+                          30
+                        </th>
+                        <th
+                          class="border border-[rgba(212,160,23,0.14)] dark:border-[rgba(212,160,23,0.14)] px-2 md:px-4 py-2">
+                          35
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th
+                          class="border border-[rgba(212,160,23,0.14)] dark:border-[rgba(212,160,23,0.14)] px-2 md:px-4 py-2 bg-[#15222f] dark:bg-[#15222f]">
+                          Variable Y (Chemical Yield)</th>
+                        <td
+                          class="border border-[rgba(212,160,23,0.14)] dark:border-[rgba(212,160,23,0.14)] px-2 md:px-4 py-1">
+                          12
+                        </td>
+                        <td
+                          class="border border-[rgba(212,160,23,0.14)] dark:border-[rgba(212,160,23,0.14)] px-2 md:px-4 py-1">
+                          18
+                        </td>
+                        <td
+                          class="border border-[rgba(212,160,23,0.14)] dark:border-[rgba(212,160,23,0.14)] px-2 md:px-4 py-1">
+                          25
+                        </td>
+                        <td
+                          class="border border-[rgba(212,160,23,0.14)] dark:border-[rgba(212,160,23,0.14)] px-2 md:px-4 py-1">
+                          23
+                        </td>
+                        <td
+                          class="border border-[rgba(212,160,23,0.14)] dark:border-[rgba(212,160,23,0.14)] px-2 md:px-4 py-1">
+                          35
+                        </td>
+                        <td
+                          class="border border-[rgba(212,160,23,0.14)] dark:border-[rgba(212,160,23,0.14)] px-2 md:px-4 py-1">
+                          40
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p class="text-sm">Construct the necessary statistical tables to calculate Karl Pearson's
+                  Coefficient of Correlation between the operating temperature and the chemical yield.
+                  Briefly interpret the mathematical nature of the derived relationship.</p>
+                <div class="mt-4">
+                  <p><strong>(b)</strong> An actuarial department within an insurance company models the
+                    monetary value of claims utilizing an Exponential Distribution defined by the
+                    probability density function <span class="math-text">f(x) =
+                      (1/5)e<sup>-x/5</sup></span> for values where <span class="math-text">x &gt;
+                      0</span> (with x measured in thousands of dollars). Formulate the explicit
+                    moment generating function, <span class="math-text">M<sub>X</sub>(t)</span>, for
+                    this continuous distribution. Utilizing the properties of the derived MGF,
+                    mathematically calculate the variance of the insurance claims.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-12 flex justify-center gap-8 pb-8">
+          <div class="w-full md:w-1/2">
+            <h3 class="text-center font-bold text-[#94a3b8] dark:text-[#94a3b8] mb-6">Exam Marks Distribution
+              Strategy</h3>
+            <div class="chart-container" style="height: 380px; min-height: 380px;">
+              <canvas id="marksChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // Tab Switching Logic
+    function switchTab(tabId, btn) {
+      document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      btn.classList.add('active');
+
+      if (tabId === 'analytics-section') {
+        // trigger chart recalculation if needed 
+      }
+    }
+
+    // Accordion Logic
+    function toggleAcc(header) {
+      const isO = header.classList.contains('open');
+      document.querySelectorAll('.acc-header').forEach(h => { h.classList.remove('open'); h.querySelector('.acc-icon').classList.remove('open'); });
+      document.querySelectorAll('.acc-body').forEach(b => b.classList.remove('open'));
+
+      if (!isO) {
+        header.classList.add('open');
+        header.querySelector('.acc-icon').classList.add('open');
+        header.nextElementSibling.classList.add('open');
+      }
+    }
+
+    // Charting Logic
+    const likelihoodLabelsRaw = [
+      "Bayes Theorem",
+      "Normal/Poisson",
+      "Random Variables",
+      "Correlation/Stats"
+    ];
+
+    const ctx1 = document.getElementById('likelihoodChart').getContext('2d');
+    Chart.defaults.color = '#e8e4dc';
+    Chart.defaults.scale.grid.color = 'rgba(212,160,23,0.1)';
+
+    new Chart(ctx1, {
+      type: 'bar',
+      data: {
+        labels: likelihoodLabelsRaw,
+        datasets: [{
+          label: 'Likelihood (%)',
+          data: [90, 85, 80, 65],
+          backgroundColor: [
+            'rgba(96, 165, 250, 0.8)',
+            'rgba(244, 114, 182, 0.8)',
+            'rgba(167, 139, 250, 0.8)',
+            'rgba(34, 211, 238, 0.8)'
+          ],
+          borderRadius: 4
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: { beginAtZero: true, max: 100 }
+        },
+        plugins: { legend: { display: false } }
+      }
+    });
+
+    const ctx2 = document.getElementById('marksChart').getContext('2d');
+    new Chart(ctx2, {
+      type: 'doughnut',
+      data: {
+        labels: ["Q1: Compulsory Short Questions", "Q2-Q4: Choose 2 Long Questions"],
+        datasets: [{
+          data: [10, 20],
+          backgroundColor: ['#f0c040', '#2ec4b6'],
+          borderWidth: 0
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: '70%',
+        plugins: {
+          legend: { position: 'bottom' }
+        }
+      }
+    });
+
+  </script>
+</body>
+
+</html>

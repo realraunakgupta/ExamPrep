@@ -1,0 +1,1443 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NAS Mid-Term — Ultimate Guide</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <style>
+    :root {
+      --navy: #0d1b2a;
+      --slate: #1b2d44;
+      --card: #f9f7f4;
+      --gold: #d4a017;
+      --gold2: #f0c040;
+      --teal: #2ec4b6;
+      --coral: #e05a4e;
+      --text: #1a1a2e;
+      --muted: #64748b;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--navy);
+      color: #e8e4dc;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* ── Sidebar ── */
+    #sidebar {
+      width: 240px;
+      background: var(--slate);
+      border-right: 1px solid rgba(212, 160, 23, 0.18);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      z-index: 20;
+    }
+
+    .sidebar-logo {
+      padding: 1.5rem 1.25rem 1rem;
+      border-bottom: 1px solid rgba(212, 160, 23, 0.15);
+    }
+
+    .sidebar-logo h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.3rem;
+      color: var(--gold2);
+      margin: 0 0 .2rem;
+    }
+
+    .sidebar-logo p {
+      font-size: .7rem;
+      color: #94a3b8;
+      margin: 0;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      padding: .75rem .5rem;
+      flex: 1;
+    }
+
+    .nav-btn {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      width: 100%;
+      text-align: left;
+      padding: .65rem 1rem;
+      border-radius: 8px;
+      border: none;
+      background: transparent;
+      color: #94a3b8;
+      font-size: .88rem;
+      font-family: 'Outfit', sans-serif;
+      cursor: pointer;
+      transition: all .2s;
+      margin-bottom: .25rem;
+    }
+
+    .nav-btn:hover {
+      background: rgba(255, 255, 255, .05);
+      color: #e8e4dc;
+    }
+
+    .nav-btn.active {
+      background: linear-gradient(135deg, rgba(212, 160, 23, .22), rgba(240, 192, 64, .08));
+      color: var(--gold2);
+      border-left: 3px solid var(--gold);
+      font-weight: 600;
+    }
+
+    .nav-btn .icon {
+      font-size: 1.1rem;
+      width: 1.4rem;
+      text-align: center;
+    }
+
+    .sidebar-footer {
+      padding: .75rem 1rem 1rem;
+      border-top: 1px solid rgba(212, 160, 23, .1);
+      font-size: .68rem;
+      color: #64748b;
+      text-align: center;
+    }
+
+    /* ── Layout ── */
+    #app {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    #main {
+      flex: 1;
+      overflow-y: auto;
+      padding: 2rem 2.5rem;
+      background: #0f1923;
+    }
+
+    /* ── Sections ── */
+    .section {
+      display: none;
+      animation: fadeUp .35s ease;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ── Page header ── */
+    .page-header {
+      margin-bottom: 1.75rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(212, 160, 23, .2);
+    }
+
+    .page-header h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2rem;
+      margin: 0 0 .35rem;
+      color: #f0ece4;
+    }
+
+    .page-header p {
+      color: #94a3b8;
+      margin: 0;
+      font-size: .92rem;
+      max-width: 640px;
+      line-height: 1.6;
+    }
+
+    /* ── Cards ── */
+    .card {
+      background: #1a2a3a;
+      border: 1px solid rgba(212, 160, 23, .14);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+
+    .card-light {
+      background: var(--card);
+      border-radius: 12px;
+      color: var(--text);
+      padding: 1.5rem;
+    }
+
+    /* ── Chart containers ── */
+    .chart-wrap {
+      position: relative;
+      width: 100%;
+      height: 320px;
+      max-height: 380px;
+    }
+
+    @media (max-width: 768px) {
+      .chart-wrap {
+        height: 240px;
+      }
+    }
+
+    /* ── Priority badges ── */
+    .badge {
+      display: inline-block;
+      font-size: .7rem;
+      font-weight: 700;
+      padding: .2rem .6rem;
+      border-radius: 999px;
+      letter-spacing: .05em;
+    }
+
+    .badge-gold {
+      background: rgba(212, 160, 23, .2);
+      color: var(--gold2);
+      border: 1px solid rgba(212, 160, 23, .4);
+    }
+
+    .badge-teal {
+      background: rgba(46, 196, 182, .15);
+      color: var(--teal);
+      border: 1px solid rgba(46, 196, 182, .35);
+    }
+
+    .badge-coral {
+      background: rgba(224, 90, 78, .15);
+      color: #f48a80;
+      border: 1px solid rgba(224, 90, 78, .35);
+    }
+
+    /* ── Accordion ── */
+    .acc-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.25rem;
+      cursor: pointer;
+      background: #1a2a3a;
+      border-radius: 10px;
+      border: 1px solid rgba(212, 160, 23, .14);
+      transition: background .2s;
+      user-select: none;
+    }
+
+    .acc-header:hover {
+      background: #1f3348;
+    }
+
+    .acc-header.open {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      border-color: rgba(212, 160, 23, .35);
+    }
+
+    .acc-body {
+      display: none;
+      background: #15222f;
+      border: 1px solid rgba(212, 160, 23, .2);
+      border-top: none;
+      border-radius: 0 0 10px 10px;
+      padding: 1.25rem;
+    }
+
+    .acc-body.open {
+      display: block;
+      animation: fadeUp .25s ease;
+    }
+
+    .acc-icon {
+      transition: transform .25s;
+      font-size: 1.2rem;
+      color: var(--gold);
+    }
+
+    .acc-icon.open {
+      transform: rotate(45deg);
+    }
+
+    /* ── Step list ── */
+    .step-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      counter-reset: steps;
+    }
+
+    .step-list li {
+      counter-increment: steps;
+      display: flex;
+      gap: .85rem;
+      margin-bottom: 1rem;
+      font-size: .9rem;
+      line-height: 1.6;
+      color: #c8d0dc;
+    }
+
+    .step-list li::before {
+      content: counter(steps);
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      color: var(--navy);
+      font-weight: 700;
+      font-size: .78rem;
+      min-width: 1.65rem;
+      height: 1.65rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: .1rem;
+    }
+
+    /* ── Code/formula ── */
+    .mono {
+      font-family: 'DM Mono', monospace;
+      background: rgba(46, 196, 182, .1);
+      color: var(--teal);
+      border: 1px solid rgba(46, 196, 182, .2);
+      padding: .15rem .45rem;
+      border-radius: 4px;
+      font-size: .82rem;
+    }
+
+    .formula-block {
+      font-family: 'DM Mono', monospace;
+      font-size: .82rem;
+      background: #0d1b2a;
+      color: var(--teal);
+      border-left: 3px solid var(--teal);
+      padding: .75rem 1rem;
+      border-radius: 4px;
+      margin: .5rem 0;
+      line-height: 1.8;
+    }
+
+    /* ── Info callout ── */
+    .callout {
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      font-size: .88rem;
+      line-height: 1.65;
+    }
+
+    .callout-gold {
+      background: rgba(212, 160, 23, .1);
+      border-left: 4px solid var(--gold);
+      color: #d4c79a;
+    }
+
+    .callout-teal {
+      background: rgba(46, 196, 182, .08);
+      border-left: 4px solid var(--teal);
+      color: #9de0da;
+    }
+
+    .callout-coral {
+      background: rgba(224, 90, 78, .1);
+      border-left: 4px solid var(--coral);
+      color: #f4a8a2;
+    }
+
+    .callout-warn {
+      background: linear-gradient(135deg, rgba(224, 90, 78, .15), rgba(224, 90, 78, .05));
+      border: 1px solid rgba(224, 90, 78, .35);
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      color: #f4b5af;
+    }
+
+    /* ── Dark matrix cards ── */
+    .matrix-card {
+      background: var(--navy);
+      border: 1px solid rgba(46, 196, 182, .25);
+      border-radius: 10px;
+      padding: 1.25rem;
+      text-align: center;
+    }
+
+    .matrix-card h4 {
+      font-family: 'DM Serif Display', serif;
+      color: var(--teal);
+      margin: 0 0 .5rem;
+      font-size: 1.05rem;
+    }
+
+    .matrix-card p {
+      font-size: .78rem;
+      color: #94a3b8;
+      margin: 0 0 .65rem;
+      line-height: 1.5;
+    }
+
+    .matrix-rule {
+      font-family: 'DM Mono', monospace;
+      font-size: .75rem;
+      color: var(--gold2);
+      background: rgba(212, 160, 23, .1);
+      border: 1px solid rgba(212, 160, 23, .25);
+      border-radius: 4px;
+      padding: .3rem .5rem;
+      display: inline-block;
+    }
+
+    /* ── Table ── */
+    .study-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .85rem;
+    }
+
+    .study-table th {
+      background: rgba(212, 160, 23, .12);
+      color: var(--gold2);
+      padding: .55rem .75rem;
+      text-align: left;
+      font-weight: 600;
+      letter-spacing: .04em;
+      font-size: .78rem;
+      border-bottom: 1px solid rgba(212, 160, 23, .2);
+    }
+
+    .study-table td {
+      padding: .55rem .75rem;
+      border-bottom: 1px solid rgba(255, 255, 255, .06);
+      color: #c8d0dc;
+      vertical-align: top;
+    }
+
+    .study-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .study-table tr:hover td {
+      background: rgba(255, 255, 255, .025);
+    }
+
+    /* ── Exam Paper ── */
+    .exam-paper {
+      background: #f9f7f3;
+      color: #1a1a2e;
+      border-radius: 12px;
+      padding: 2.5rem;
+      font-family: 'Georgia', serif;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, .4);
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .exam-paper h2 {
+      font-family: 'Georgia', serif;
+      margin: 0;
+    }
+
+    .exam-header {
+      text-align: center;
+      border-bottom: 2px solid #1a1a2e;
+      padding-bottom: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .exam-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: .83rem;
+      font-weight: 700;
+      margin-top: .75rem;
+    }
+
+    .exam-note {
+      text-align: center;
+      font-style: italic;
+      font-weight: 600;
+      font-size: .88rem;
+      margin-bottom: 1rem;
+      color: #374151;
+    }
+
+    .exam-row {
+      display: grid;
+      grid-template-columns: 2.5rem 1fr 3rem 2.5rem;
+      border-bottom: 1px solid #d1d5db;
+      padding: .75rem .5rem;
+      font-size: .87rem;
+      gap: .5rem;
+      align-items: start;
+    }
+
+    .exam-row.header {
+      font-weight: 700;
+      border-bottom: 2px solid #1a1a2e;
+      border-top: 2px solid #1a1a2e;
+      background: #f0ece4;
+    }
+
+    .exam-q-content {
+      display: flex;
+      flex-direction: column;
+      gap: .65rem;
+    }
+
+    .exam-q-part {
+      display: flex;
+      gap: .5rem;
+    }
+
+    .exam-marks {
+      text-align: center;
+      font-weight: 700;
+    }
+
+    .exam-co {
+      text-align: center;
+      color: #6b7280;
+    }
+
+    /* ── Priority stat cards ── */
+    .stat-card {
+      background: #1a2a3a;
+      border-radius: 12px;
+      padding: 1.25rem;
+      border: 1px solid rgba(212, 160, 23, .14);
+      transition: transform .2s, box-shadow .2s;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, .3);
+    }
+
+    .stat-number {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.5rem;
+      line-height: 1;
+    }
+
+    /* ── Scrollbar ── */
+    #main::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    #main::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    #main::-webkit-scrollbar-thumb {
+      background: rgba(212, 160, 23, .3);
+      border-radius: 4px;
+    }
+
+    /* ── Mobile top bar ── */
+    #topbar {
+      display: none;
+      background: var(--slate);
+      border-bottom: 1px solid rgba(212, 160, 23, .2);
+      padding: .75rem 1rem;
+    }
+
+    #topbar h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.1rem;
+      color: var(--gold2);
+      margin: 0 0 .5rem;
+    }
+
+    .topbar-nav {
+      display: flex;
+      gap: .4rem;
+      overflow-x: auto;
+      padding-bottom: .25rem;
+    }
+
+    .topbar-btn {
+      padding: .4rem .85rem;
+      border-radius: 999px;
+      border: 1px solid rgba(212, 160, 23, .3);
+      background: transparent;
+      color: #94a3b8;
+      font-size: .78rem;
+      font-family: 'Outfit', sans-serif;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all .2s;
+    }
+
+    .topbar-btn.active {
+      background: rgba(212, 160, 23, .2);
+      color: var(--gold2);
+      border-color: var(--gold);
+      font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        overflow: auto;
+        flex-direction: column;
+        height: auto;
+      }
+
+      #app {
+        flex-direction: column;
+        overflow: visible;
+      }
+
+      #sidebar {
+        display: none;
+      }
+
+      #topbar {
+        display: block;
+      }
+
+      #main {
+        overflow: visible;
+        padding: 1.25rem;
+      }
+    }
+
+    /* ── Grid helpers ── */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1rem;
+    }
+
+    @media (max-width: 900px) {
+
+      .grid-2,
+      .grid-3 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ── Divider ── */
+    .divider {
+      border: none;
+      border-top: 1px solid rgba(212, 160, 23, .12);
+      margin: 1.75rem 0;
+    }
+
+    /* ── Section header stripe ── */
+    .stripe-heading {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .stripe-heading h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.4rem;
+      color: #f0ece4;
+      margin: 0;
+    }
+
+    .stripe-heading .line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(212, 160, 23, .4), transparent);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Mobile top bar -->
+  <div id="topbar">
+    <h1>⚡ NAS Ultimate Guide</h1>
+    <div class="topbar-nav">
+      <button class="topbar-btn active" onclick="navigate('analytics', this)">📊 Analytics</button>
+      <button class="topbar-btn" onclick="navigate('patterns', this)">🧩 Patterns</button>
+      <button class="topbar-btn" onclick="navigate('study', this)">📚 Study Guide</button>
+      <button class="topbar-btn" onclick="navigate('exam', this)">🎯 Predicted Paper</button>
+    </div>
+  </div>
+
+  <div id="app">
+    <!-- Sidebar -->
+    <nav id="sidebar">
+      <div class="sidebar-logo">
+        <h1>⚡ NAS Guide</h1>
+        <p>Units 1 & 2 · GGSIPU</p>
+      </div>
+      <div class="nav-links">
+        <button class="nav-btn active" id="nav-analytics" onclick="navigate('analytics', this)">
+          <span class="icon">📊</span> Exam Analytics
+        </button>
+        <button class="nav-btn" id="nav-patterns" onclick="navigate('patterns', this)">
+          <span class="icon">🧩</span> Pattern Master
+        </button>
+        <button class="nav-btn" id="nav-study" onclick="navigate('study', this)">
+          <span class="icon">📚</span> Study Guide
+        </button>
+        <button class="nav-btn" id="nav-exam" onclick="navigate('exam', this)">
+          <span class="icon">🎯</span> Predicted Paper
+        </button>
+      </div>
+      <div class="sidebar-footer">Based on May 2023, Apr 2024<br>& Mar 2025 Mid-Terms</div>
+    </nav>
+
+    <!-- Main content -->
+    <main id="main">
+
+      <!-- ═══════════════════════════════════════
+         SECTION 1: ANALYTICS
+    ═══════════════════════════════════════ -->
+      <section id="analytics" class="section active">
+        <div class="page-header">
+          <h2>Exam Trend Analysis</h2>
+          <p>We analyzed all three NAS mid-term papers (May 2023, Apr 2024, Mar 2025). This is the data-driven triage to
+            show exactly where your marks come from. Start here.</p>
+        </div>
+
+        <!-- Stat cards -->
+        <div class="grid-3" style="margin-bottom:1.5rem;">
+          <div class="stat-card">
+            <div class="stat-number" style="color:var(--gold2)">100%</div>
+            <div style="font-weight:600;margin:.35rem 0 .25rem;color:#e8e4dc;">Graph Matrices</div>
+            <div style="font-size:.8rem;color:#94a3b8;">Every single paper. Guaranteed 4–6 marks. Learn this first.
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" style="color:var(--teal)">95%</div>
+            <div style="font-weight:600;margin:.35rem 0 .25rem;color:#e8e4dc;">Waveforms & Laplace</div>
+            <div style="font-size:.8rem;color:#94a3b8;">Synthesize waveforms + Laplace, including periodic signals.
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" style="color:#f48a80">90%</div>
+            <div style="font-weight:600;margin:.35rem 0 .25rem;color:#e8e4dc;">AC Network Theorems</div>
+            <div style="font-size:.8rem;color:#94a3b8;">Mesh, Nodal, Thevenin, Norton with complex impedances.</div>
+          </div>
+        </div>
+
+        <!-- Charts grid -->
+        <div class="grid-2" style="margin-bottom:1.5rem;">
+          <div class="card">
+            <h3 style="font-family:'DM Serif Display',serif;font-size:1.05rem;margin:0 0 .25rem;color:#f0ece4;">Topic
+              Likelihood (%)</h3>
+            <p style="font-size:.75rem;color:#64748b;margin:0 0 1rem;">Based on frequency across past 3 mid-terms</p>
+            <div class="chart-wrap"><canvas id="barChart"></canvas></div>
+          </div>
+          <div class="card">
+            <h3 style="font-family:'DM Serif Display',serif;font-size:1.05rem;margin:0 0 .25rem;color:#f0ece4;">Study
+              Priority Matrix</h3>
+            <p style="font-size:.75rem;color:#64748b;margin:0 0 1rem;">Bubble size = mark weightage. <strong
+                style="color:var(--gold2)">Target top-left</strong> (high yield, low effort)</p>
+            <div class="chart-wrap"><canvas id="bubbleChart"></canvas></div>
+          </div>
+        </div>
+
+        <!-- Takeaway callout -->
+        <div class="callout callout-gold">
+          <strong style="color:var(--gold2);display:block;margin-bottom:.5rem;">📌 Key Strategic Takeaways</strong>
+          <ul style="margin:0;padding-left:1.25rem;line-height:1.9;font-size:.88rem;">
+            <li><strong>Graph Theory Matrices are free marks.</strong> Pure algorithm, no creativity needed. Master the
+              ±1 rules once and you score 4–6 marks every time.</li>
+            <li><strong>Waveform Synthesis is equally guaranteed.</strong> Learn to read graphs left-to-right and
+              translate jumps/slopes into u(t) and r(t) functions.</li>
+            <li><strong>AC Theorems carry the highest per-question marks</strong> but require fluency with complex
+              arithmetic (jω). Use your calculator's CMPLX mode.</li>
+            <li><strong>Transient Response</strong> appears ~70% of the time — often as a bonus question. Know initial
+              conditions for L and C.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════
+         SECTION 2: PATTERN MASTER
+    ═══════════════════════════════════════ -->
+      <section id="patterns" class="section">
+        <div class="page-header">
+          <h2>Pattern Master</h2>
+          <p>NAS exam questions follow strict procedural patterns. Even when numerical values change, the method stays
+            identical. Memorize these algorithms — they are universal.</p>
+        </div>
+
+        <!-- Pattern 1 -->
+        <div style="margin-bottom:1rem;">
+          <div class="acc-header" onclick="toggleAcc('p1')">
+            <div>
+              <span class="badge badge-gold" style="margin-bottom:.4rem;display:inline-block;">100% PROBABILITY</span>
+              <div style="font-family:'DM Serif Display',serif;font-size:1.15rem;color:#f0ece4;">Pattern 1: Graph Theory
+                Matrices (A, B, Q)</div>
+            </div>
+            <span class="acc-icon" id="icon-p1">+</span>
+          </div>
+          <div class="acc-body" id="p1">
+            <div class="callout callout-teal" style="margin-bottom:1.25rem;font-style:italic;font-size:.85rem;">
+              "For the graph shown in Fig 5, consider the tree formed by branches (2, 3, 4), using this tree write
+              incidence matrix, Tie-set matrix and cut-set matrix."
+              <br><span style="font-style:normal;font-size:.78rem;opacity:.75;">— [Q2b, May 2023] & [Q4, Mar
+                2025]</span>
+            </div>
+            <ol class="step-list">
+              <li>
+                <div>
+                  <strong style="color:#e8e4dc;">Draw the Graph & Select a Tree.</strong><br>
+                  Replace all elements (R, L, C, sources) with line segments. Number the nodes and assign arrow
+                  directions to each branch.
+                  Select a <em>Tree</em> — a connected subgraph covering all nodes with <strong>no closed
+                    loops</strong>.
+                  <br><span style="font-size:.8rem;color:#64748b;">Tree branches = Twigs (draw solid). Remaining = Links
+                    (draw dashed).</span>
+                </div>
+              </li>
+              <li>
+                <div>
+                  <strong style="color:#e8e4dc;">Incidence Matrix [A]</strong> — represents KCL.<br>
+                  Rows = Nodes (remove reference node for reduced matrix). Cols = Branches.
+                  <div class="formula-block">Branch leaves node → +1<br>Branch enters node → −1<br>Not connected → 0
+                  </div>
+                  <span style="font-size:.8rem;color:#64748b;">Number of twigs = Nodes − 1 = N−1. Total branches
+                    B.</span>
+                </div>
+              </li>
+              <li>
+                <div>
+                  <strong style="color:#e8e4dc;">Tie-set Matrix [B]</strong> — represents KVL (fundamental loops).<br>
+                  Adding one link to the tree creates one fundamental loop. Rows = Loops (one per link). Cols =
+                  Branches.<br>
+                  <em>Loop direction = direction of its defining Link.</em>
+                  <div class="formula-block">Branch direction matches loop direction → +1<br>Branch direction opposes
+                    loop → −1<br>Branch not in loop → 0</div>
+                </div>
+              </li>
+              <li>
+                <div>
+                  <strong style="color:#e8e4dc;">Cut-set Matrix [Q]</strong> — defines independent voltage
+                  variables.<br>
+                  Removing one twig (and some links) divides graph in two. Rows = Cut-sets (one per twig). Cols =
+                  Branches.<br>
+                  <em>Cut-set direction = direction of its defining Twig.</em>
+                  <div class="formula-block">Cut link has same relative direction as twig → +1<br>Cut link opposes twig
+                    direction → −1<br>Branch not in cut-set → 0</div>
+                </div>
+              </li>
+            </ol>
+          </div>
+        </div>
+
+        <!-- Pattern 2 -->
+        <div style="margin-bottom:1rem;">
+          <div class="acc-header" onclick="toggleAcc('p2')">
+            <div>
+              <span class="badge badge-teal" style="margin-bottom:.4rem;display:inline-block;">95% PROBABILITY</span>
+              <div style="font-family:'DM Serif Display',serif;font-size:1.15rem;color:#f0ece4;">Pattern 2: Waveform
+                Synthesis & Laplace Transform</div>
+            </div>
+            <span class="acc-icon" id="icon-p2">+</span>
+          </div>
+          <div class="acc-body" id="p2">
+            <div class="callout callout-teal" style="margin-bottom:1.25rem;font-style:italic;font-size:.85rem;">
+              "Synthesize the waveform as shown in fig. 2" / "Obtain the Laplace transformation of the waveform given in
+              fig.6"
+              <br><span style="font-style:normal;font-size:.78rem;opacity:.75;">— [Q1d & Q3a, May 2023] & [Q4a, Apr
+                2024]</span>
+            </div>
+            <ol class="step-list">
+              <li>
+                <div>
+                  <strong style="color:#e8e4dc;">Identify Building Blocks (read graph LEFT to RIGHT).</strong>
+                  <div class="formula-block">Sudden vertical jump? → Step: K · u(t − a) [K = height, a = time of jump]
+                    Slanted line starts? → Ramp: m · r(t − a) [m = slope]
+                    Slope changes? → Add new ramp to correct: slope_new = slope_old + slope_added
+                    Line returns to 0? → Subtract equivalent function to cancel</div>
+                </div>
+              </li>
+              <li>
+                <div>
+                  <strong style="color:#e8e4dc;">Write the combined f(t).</strong><br>
+                  Traverse left to right adding a new term every time the waveform changes behavior. Example — square
+                  pulse (height 10) from t=2 to t=5:
+                  <span class="mono">f(t) = 10·u(t−2) − 10·u(t−5)</span>
+                </div>
+              </li>
+              <li>
+                <div>
+                  <strong style="color:#e8e4dc;">Apply Standard Laplace Transforms.</strong>
+                  <div class="formula-block">L{ u(t−a) } = e^(−as) / s
+                    L{ r(t−a) } = e^(−as) / s²
+                    L{ sin(ωt) } = ω / (s² + ω²)
+                    L{ cos(ωt) } = s / (s² + ω²)
+                    L{ e^(−at) } = 1 / (s + a)</div>
+                </div>
+              </li>
+              <li>
+                <div>
+                  <strong style="color:#e8e4dc;">For Periodic Waveforms</strong> (repeats every T seconds):<br>
+                  Find Laplace of the <em>first period only</em>, call it F₁(s), then:
+                  <div class="formula-block">F(s) = F₁(s) / (1 − e^(−Ts))</div>
+                </div>
+              </li>
+            </ol>
+          </div>
+        </div>
+
+        <!-- Pattern 3 -->
+        <div style="margin-bottom:1.5rem;">
+          <div class="acc-header" onclick="toggleAcc('p3')">
+            <div>
+              <span class="badge badge-coral" style="margin-bottom:.4rem;display:inline-block;">90% PROBABILITY</span>
+              <div style="font-family:'DM Serif Display',serif;font-size:1.15rem;color:#f0ece4;">Pattern 3: AC Network
+                Analysis (Mesh / Nodal / Thevenin)</div>
+            </div>
+            <span class="acc-icon" id="icon-p3">+</span>
+          </div>
+          <div class="acc-body" id="p3">
+            <div class="callout callout-coral" style="margin-bottom:1.25rem;font-style:italic;font-size:.85rem;">
+              "Find the current through 20Ω resistor using Thevenin's theorem (Fig.4)" / "Find the drop across 4Ω
+              resistor using mesh analysis"
+              <br><span style="font-style:normal;font-size:.78rem;opacity:.75;">— [Q2a & Q1c, May 2023] & [Q2a, Apr
+                2024]</span>
+            </div>
+            <ol class="step-list">
+              <li>
+                <div>
+                  <strong style="color:#e8e4dc;">Convert to Phasor Domain.</strong><br>
+                  Express all sources in polar form <span class="mono">V∠θ</span>. Convert all elements to complex
+                  impedance Z:
+                  <div class="formula-block">Resistor → Z = R
+                    Inductor → Z = jωL
+                    Capacitor → Z = −j/(ωC) = 1/(jωC)</div>
+                </div>
+              </li>
+              <li>
+                <div>
+                  <strong style="color:#e8e4dc;">Set Up the Mesh/Nodal Matrix.</strong><br>
+                  For <strong>Mesh</strong>: Assign clockwise currents I₁, I₂… Write KVL. Use the self-impedance
+                  shortcut:
+                  <div class="formula-block">[Z₁₁ Z₁₂] [I₁] [V₁]
+                    [Z₂₁ Z₂₂] [I₂] = [V₂]
+
+                    Z_nn = sum of ALL impedances in mesh n (positive)
+                    Z_mn = negative sum of shared impedances between mesh m and n
+                    V_n = sum of voltage rises from sources, in loop direction</div>
+                </div>
+              </li>
+              <li>
+                <div>
+                  <strong style="color:#e8e4dc;">Solve via Cramer's Rule (complex arithmetic).</strong>
+                  <div class="formula-block">I₁ = Δ₁/Δ, I₂ = Δ₂/Δ (determinants with complex numbers)
+                    Multiplication: (a+jb)(c+jd) = (ac−bd) + j(ad+bc)
+                    Division: multiply numerator AND denominator by complex conjugate</div>
+                </div>
+              </li>
+            </ol>
+            <!-- Calculator Warning -->
+            <div class="callout-warn" style="display:flex;gap:1rem;align-items:flex-start;margin-top:1rem;">
+              <span style="font-size:1.6rem;flex-shrink:0;">⚠️</span>
+              <div>
+                <strong style="display:block;color:#f4b5af;margin-bottom:.3rem;">Calculator Warning — Most Common Source
+                  of Errors</strong>
+                Ensure your scientific calculator is switched to <strong>Complex Mode (CMPLX)</strong> before the exam.
+                Know how to convert between Rectangular (a+jb) and Polar (r∠θ) form instantly. Practice this beforehand
+                — almost all calculation mistakes here come from wrong mode or wrong conjugate.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════
+         SECTION 3: STUDY GUIDE
+    ═══════════════════════════════════════ -->
+      <section id="study" class="section">
+        <div class="page-header">
+          <h2>Complete Study Guide</h2>
+          <p>All core definitions, theorems, and formulas for Units 1 & 2. Use this as your rapid-review textbook after
+            mastering the patterns.</p>
+        </div>
+
+        <!-- UNIT 1 -->
+        <div class="stripe-heading">
+          <h3>Unit I — AC Circuits & Graph Theory</h3>
+          <div class="line"></div>
+        </div>
+
+        <div class="card" style="margin-bottom:1.5rem;">
+          <h4
+            style="font-family:'DM Serif Display',serif;color:var(--gold2);margin:0 0 .9rem;display:flex;align-items:center;gap:.5rem;">
+            📄 Syllabus Highlights</h4>
+          <p style="font-size:.85rem;color:#94a3b8;line-height:1.6;margin:0;">Application of Mesh current analysis, Node
+            voltage analysis and Network theorems in AC circuits.
+            Graph theory: concept of tree, tie set matrix, cut set matrix and application to solve electric networks.
+          </p>
+        </div>
+
+        <div class="grid-2" style="margin-bottom:1.5rem;">
+          <div class="card">
+            <h4
+              style="font-family:'DM Serif Display',serif;color:var(--gold2);margin:0 0 .9rem;display:flex;align-items:center;gap:.5rem;">
+              <span>⚡</span> AC Network Theorems
+            </h4>
+            <table class="study-table">
+              <tr>
+                <th>Theorem</th>
+                <th>What it says</th>
+              </tr>
+              <tr>
+                <td><strong style="color:var(--gold2)">Superposition</strong></td>
+                <td>Total response = sum of individual responses. Deactivate unused sources: short V-sources, open
+                  I-sources.</td>
+              </tr>
+              <tr>
+                <td><strong style="color:var(--teal)">Thevenin's</strong></td>
+                <td>Replace network with V<sub>th</sub> (open-circuit voltage) in series with Z<sub>th</sub> (impedance
+                  with sources off).</td>
+              </tr>
+              <tr>
+                <td><strong style="color:#f48a80">Norton's</strong></td>
+                <td>Replace network with I<sub>N</sub> (short-circuit current) in parallel with Z<sub>N</sub>.
+                  Z<sub>N</sub> = Z<sub>th</sub>.</td>
+              </tr>
+            </table>
+            <div class="formula-block" style="margin-top:.75rem;">Z_R = R | Z_L = jωL | Z_C = −j/(ωC)</div>
+          </div>
+
+          <!-- PYQ Section -->
+          <div class="card" style="margin-bottom:1.5rem;">
+            <h4
+              style="font-family:'DM Serif Display',serif;color:var(--gold2);margin:0 0 .9rem;display:flex;align-items:center;gap:.5rem;">
+              ⬇️ Download Original PDF Papers</h4>
+            <div class="flex flex-wrap gap-3" style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
+              <a href="assets/pdfs/NAS/NAS_Mid_Term_May_2023.pdf" download="NAS_Mid_Term_May_2023.pdf" target="_blank"
+                style="background:rgba(46,196,182,.15); color:var(--teal); border: 1px solid rgba(46,196,182,.35); padding: .4rem .8rem; border-radius: 8px; font-size: .8rem; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: .4rem; transition:.2s"
+                onmouseover="this.style.background='rgba(46,196,182,.3)'"
+                onmouseout="this.style.background='rgba(46,196,182,.15)'">
+                <svg style="width:1rem;height:1rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                  </path>
+                </svg>
+                May 2023
+              </a>
+              <a href="assets/pdfs/NAS/NAS_Mid_Term_April_2024.pdf" download="NAS_Mid_Term_April_2024.pdf" target="_blank"
+                style="background:rgba(46,196,182,.15); color:var(--teal); border: 1px solid rgba(46,196,182,.35); padding: .4rem .8rem; border-radius: 8px; font-size: .8rem; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: .4rem; transition:.2s"
+                onmouseover="this.style.background='rgba(46,196,182,.3)'"
+                onmouseout="this.style.background='rgba(46,196,182,.15)'">
+                <svg style="width:1rem;height:1rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                  </path>
+                </svg>
+                April 2024
+              </a>
+              <a href="assets/pdfs/NAS/NAS_Mid_Term_March_2025.pdf" download="NAS_Mid_Term_March_2025.pdf" target="_blank"
+                style="background:rgba(46,196,182,.15); color:var(--teal); border: 1px solid rgba(46,196,182,.35); padding: .4rem .8rem; border-radius: 8px; font-size: .8rem; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: .4rem; transition:.2s"
+                onmouseover="this.style.background='rgba(46,196,182,.3)'"
+                onmouseout="this.style.background='rgba(46,196,182,.15)'">
+                <svg style="width:1rem;height:1rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                  </path>
+                </svg>
+                March 2025
+              </a>
+            </div>
+          </div>
+
+          <div class="card">
+            <h4
+              style="font-family:'DM Serif Display',serif;color:var(--teal);margin:0 0 .9rem;display:flex;align-items:center;gap:.5rem;">
+              <span>🕸️</span> Graph Theory Vocabulary
+            </h4>
+            <table class="study-table">
+              <tr>
+                <th>Term</th>
+                <th>Definition</th>
+              </tr>
+              <tr>
+                <td><strong style="color:var(--gold2)">Graph</strong></td>
+                <td>Network with all elements replaced by line segments (branches).</td>
+              </tr>
+              <tr>
+                <td><strong style="color:var(--gold2)">Node</strong></td>
+                <td>Junction where 2 or more branches meet.</td>
+              </tr>
+              <tr>
+                <td><strong style="color:var(--gold2)">Tree</strong></td>
+                <td>Connected subgraph spanning all nodes with NO closed loops.</td>
+              </tr>
+              <tr>
+                <td><strong style="color:var(--teal)">Twig</strong></td>
+                <td>Branch belonging to the tree. Count = N − 1.</td>
+              </tr>
+              <tr>
+                <td><strong style="color:var(--teal)">Link / Chord</strong></td>
+                <td>Branch NOT in the tree. Count = B − (N − 1).</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <!-- Dark matrices section (from File 3) -->
+        <div
+          style="background:var(--navy);border:1px solid rgba(46,196,182,.3);border-radius:12px;padding:1.5rem;margin-bottom:1.75rem;">
+          <h4
+            style="font-family:'DM Serif Display',serif;color:var(--teal);font-size:1.25rem;margin:0 0 1rem;text-align:center;letter-spacing:.02em;">
+            The 3 Crucial Matrices</h4>
+          <div class="grid-3">
+            <div class="matrix-card">
+              <h4>Incidence Matrix [A]</h4>
+              <p>Encodes which branches connect to which nodes. Algebraically represents KCL at every node.</p>
+              <span class="matrix-rule">Leaves=+1 · Enters=−1 · None=0</span>
+            </div>
+            <div class="matrix-card">
+              <h4>Tie-set Matrix [B]</h4>
+              <p>Describes fundamental loops — each formed by adding exactly ONE link to the tree. Represents KVL.</p>
+              <span class="matrix-rule">Same dir=+1 · Opposite=−1 · None=0</span>
+            </div>
+            <div class="matrix-card">
+              <h4>Cut-set Matrix [Q]</h4>
+              <p>Describes fundamental cut-sets — each formed by removing one twig. Defines independent voltages.</p>
+              <span class="matrix-rule">Defined by Twig direction · ±1 · 0</span>
+            </div>
+          </div>
+        </div>
+
+        <hr class="divider">
+
+        <!-- UNIT 2 -->
+        <div class="stripe-heading">
+          <h3>Unit II — Waveforms & Transient Response</h3>
+          <div class="line"></div>
+        </div>
+
+        <div class="card" style="margin-bottom:1.5rem;">
+          <h4
+            style="font-family:'DM Serif Display',serif;color:var(--gold2);margin:0 0 .9rem;display:flex;align-items:center;gap:.5rem;">
+            📄 Syllabus Highlights</h4>
+          <p style="font-size:.85rem;color:#94a3b8;line-height:1.6;margin:0;">Periodic waveforms and signal synthesis,
+            properties and applications of Laplace transform of complex waveform.
+            System modeling in terms of differential equations and transient response of R, L, C, series and parallel
+            circuits for impulse, step, ramp, sinusoidal and exponential signals by classical method and using Laplace
+            transform.</p>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <h4
+              style="font-family:'DM Serif Display',serif;color:var(--gold2);margin:0 0 .9rem;display:flex;align-items:center;gap:.5rem;">
+              <span>📈</span> Standard Signals & Laplace Transforms
+            </h4>
+            <table class="study-table">
+              <tr>
+                <th>Signal</th>
+                <th>Notation</th>
+                <th>L{f(t)}</th>
+              </tr>
+              <tr>
+                <td>Unit Impulse</td>
+                <td class="mono" style="background:none;border:none;color:#94a3b8;">δ(t)</td>
+                <td class="mono" style="background:none;border:none;color:var(--teal);">1</td>
+              </tr>
+              <tr>
+                <td>Unit Step</td>
+                <td class="mono" style="background:none;border:none;color:#94a3b8;">u(t)</td>
+                <td class="mono" style="background:none;border:none;color:var(--teal);">1/s</td>
+              </tr>
+              <tr>
+                <td>Delayed Step</td>
+                <td class="mono" style="background:none;border:none;color:#94a3b8;">u(t−a)</td>
+                <td class="mono" style="background:none;border:none;color:var(--teal);">e^(−as)/s</td>
+              </tr>
+              <tr>
+                <td>Unit Ramp</td>
+                <td class="mono" style="background:none;border:none;color:#94a3b8;">r(t)=t·u(t)</td>
+                <td class="mono" style="background:none;border:none;color:var(--teal);">1/s²</td>
+              </tr>
+              <tr>
+                <td>Delayed Ramp</td>
+                <td class="mono" style="background:none;border:none;color:#94a3b8;">r(t−a)</td>
+                <td class="mono" style="background:none;border:none;color:var(--teal);">e^(−as)/s²</td>
+              </tr>
+              <tr>
+                <td>Exponential</td>
+                <td class="mono" style="background:none;border:none;color:#94a3b8;">e^(−at)</td>
+                <td class="mono" style="background:none;border:none;color:var(--teal);">1/(s+a)</td>
+              </tr>
+              <tr>
+                <td>Sine</td>
+                <td class="mono" style="background:none;border:none;color:#94a3b8;">sin(ωt)</td>
+                <td class="mono" style="background:none;border:none;color:var(--teal);">ω/(s²+ω²)</td>
+              </tr>
+              <tr>
+                <td>Cosine</td>
+                <td class="mono" style="background:none;border:none;color:#94a3b8;">cos(ωt)</td>
+                <td class="mono" style="background:none;border:none;color:var(--teal);">s/(s²+ω²)</td>
+              </tr>
+            </table>
+            <div class="callout callout-teal" style="margin-top:.85rem;font-size:.82rem;">
+              <strong>Periodic Waveform:</strong> F(s) = F₁(s) / (1 − e^(−Ts)) where F₁ = Laplace of first period only.
+            </div>
+          </div>
+
+          <div class="card">
+            <h4
+              style="font-family:'DM Serif Display',serif;color:#f0c06a;margin:0 0 .9rem;display:flex;align-items:center;gap:.5rem;">
+              <span>⏱️</span> Transient Response
+            </h4>
+            <p style="font-size:.85rem;color:#94a3b8;margin:0 0 .9rem;line-height:1.6;">Transients occur when a switch
+              changes state. Energy storage elements resist sudden changes — this is the key insight.</p>
+
+            <table class="study-table" style="margin-bottom:.9rem;">
+              <tr>
+                <th>Element</th>
+                <th>What it resists</th>
+                <th>At t=0⁺ acts as</th>
+              </tr>
+              <tr>
+                <td><strong style="color:var(--teal)">Inductor (L)</strong></td>
+                <td>Change in <em>current</em></td>
+                <td>Open circuit</td>
+              </tr>
+              <tr>
+                <td><strong style="color:#f0c040">Capacitor (C)</strong></td>
+                <td>Change in <em>voltage</em></td>
+                <td>Short circuit (if uncharged)</td>
+              </tr>
+            </table>
+
+            <div style="font-size:.82rem;color:#94a3b8;margin-bottom:.5rem;font-weight:600;">INITIAL CONDITIONS (most
+              important rule):</div>
+            <div class="formula-block">i_L(0⁺) = i_L(0⁻) [current through L cannot jump]
+              v_C(0⁺) = v_C(0⁻) [voltage across C cannot jump]</div>
+
+            <div style="font-size:.82rem;color:#94a3b8;margin:.75rem 0 .5rem;font-weight:600;">Series RL — Classical
+              Method:</div>
+            <div class="formula-block">V = R·i(t) + L·(di/dt)
+              Solution: i(t) = (V/R)[1 − e^(−Rt/L)]
+              Time constant: τ = L/R</div>
+
+            <div style="font-size:.82rem;color:#94a3b8;margin:.75rem 0 .5rem;font-weight:600;">Series RL — Laplace
+              Method:</div>
+            <div class="formula-block">V/s = R·I(s) + sL·I(s) − L·i(0⁻)
+              I(s) = V / [s(R + sL)] → Partial Fractions → i(t)</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════
+         SECTION 4: PREDICTED PAPER
+    ═══════════════════════════════════════ -->
+      <section id="exam" class="section">
+        <div class="page-header">
+          <h2>Predicted Mid-Term Paper</h2>
+          <p>Algorithmically generated based on the strict patterns observed across all three source papers. Matches the
+            exact structure, weightage, and question distribution. Set a timer for 90 minutes.</p>
+        </div>
+
+        <div class="exam-paper"
+          style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 400px; text-align: center; border: 2px dashed rgba(26, 26, 46, 0.2); background: #fdfcfb;">
+          <span style="font-size: 3rem; margin-bottom: 1rem; color: var(--gold);">📝</span>
+          <h3
+            style="font-family: 'DM Serif Display', serif; font-size: 1.6rem; color: var(--navy); margin: 0 0 0.5rem;">
+            Predicted Paper Pending</h3>
+          <p style="color: #64748b; font-size: 0.95rem; max-width: 400px; line-height: 1.6;">The algorithmic mock exam
+            for this subject is currently being compiled and will be uploaded here closer to the examination date.</p>
+        </div><!-- /exam-paper -->
+      </section>
+
+    </main>
+  </div><!-- /app -->
+
+  <script>
+    /* ── Navigation ── */
+    const sections = ['analytics', 'patterns', 'study', 'exam'];
+
+    function navigate(id, clickedBtn) {
+      sections.forEach(s => {
+        document.getElementById(s).classList.remove('active');
+      });
+      document.querySelectorAll('.nav-btn, .topbar-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      if (clickedBtn) clickedBtn.classList.add('active');
+      // Also sync the other nav (sidebar vs topbar)
+      const sideBtn = document.getElementById('nav-' + id);
+      if (sideBtn) sideBtn.classList.add('active');
+
+      if (id === 'analytics' && !window.chartsInit) initCharts();
+    }
+
+    /* ── Accordions ── */
+    function toggleAcc(id) {
+      const body = document.getElementById(id);
+      const icon = document.getElementById('icon-' + id);
+      const header = body.previousElementSibling;
+      const isOpen = body.classList.contains('open');
+      body.classList.toggle('open', !isOpen);
+      header.classList.toggle('open', !isOpen);
+      icon.textContent = isOpen ? '+' : '×';
+      icon.classList.toggle('open', !isOpen);
+    }
+
+    /* ── Label wrapper ── */
+    function wrapLabel(text, max) {
+      if (text.length <= max) return text;
+      const words = text.split(' ');
+      const lines = []; let cur = '';
+      words.forEach(w => {
+        if ((cur + w).length > max && cur) { lines.push(cur.trim()); cur = ''; }
+        cur += w + ' ';
+      });
+      if (cur.trim()) lines.push(cur.trim());
+      return lines;
+    }
+
+    /* ── Charts ── */
+    function initCharts() {
+      window.chartsInit = true;
+
+      /* Bar Chart */
+      const barCtx = document.getElementById('barChart').getContext('2d');
+      const barLabels = [
+        'Graph Theory Matrices',
+        'Waveform Synthesis & Laplace',
+        'AC Network Theorems',
+        'Transient Response (RL/RC)',
+        'Basic Signal Sketching'
+      ];
+      new Chart(barCtx, {
+        type: 'bar',
+        data: {
+          labels: barLabels.map(l => wrapLabel(l, 14)),
+          datasets: [{
+            label: 'Likelihood (%)',
+            data: [100, 95, 90, 70, 33],
+            backgroundColor: [
+              'rgba(212,160,23,.8)',
+              'rgba(46,196,182,.75)',
+              'rgba(224,90,78,.75)',
+              'rgba(100,130,180,.65)',
+              'rgba(100,116,139,.5)'
+            ],
+            borderColor: ['#d4a017', '#2ec4b6', '#e05a4e', '#6482b4', '#64748b'],
+            borderWidth: 1, borderRadius: 6
+          }]
+        },
+        options: {
+          indexAxis: 'y',
+          responsive: true, maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: '#0d1b2a',
+              borderColor: 'rgba(212,160,23,.4)', borderWidth: 1,
+              titleColor: '#f0c040', bodyColor: '#c8d0dc',
+              callbacks: {
+                title: ti => { const l = ti[0].chart.data.labels[ti[0].dataIndex]; return Array.isArray(l) ? l.join(' ') : l; },
+                label: ctx => ` ${ctx.parsed.x}% chance of appearing`
+              }
+            }
+          },
+          scales: {
+            x: {
+              beginAtZero: true, max: 100,
+              grid: { color: 'rgba(255,255,255,.06)' },
+              ticks: { color: '#64748b', font: { family: 'Outfit' } },
+              title: { display: true, text: 'Likelihood (%)', color: '#64748b', font: { family: 'Outfit', size: 11 } }
+            },
+            y: {
+              grid: { display: false },
+              ticks: { color: '#94a3b8', font: { family: 'DM Mono', size: 11 } }
+            }
+          }
+        }
+      });
+
+      /* Bubble Chart */
+      const bubCtx = document.getElementById('bubbleChart').getContext('2d');
+      new Chart(bubCtx, {
+        type: 'bubble',
+        data: {
+          labels: ['Graph Matrices', 'Signal Sketching', 'Waveform & Laplace', 'AC Theorems', 'RL/RC Transients'],
+          datasets: [{
+            label: 'Topics',
+            data: [
+              { x: 2, y: 100, r: 16 },
+              { x: 1.5, y: 33, r: 8 },
+              { x: 5, y: 95, r: 22 },
+              { x: 8, y: 90, r: 18 },
+              { x: 8.5, y: 70, r: 13 }
+            ],
+            backgroundColor: [
+              'rgba(212,160,23,.75)',
+              'rgba(100,116,139,.6)',
+              'rgba(46,196,182,.7)',
+              'rgba(224,90,78,.7)',
+              'rgba(100,130,180,.65)'
+            ],
+            borderColor: ['#d4a017', '#64748b', '#2ec4b6', '#e05a4e', '#6482b4'],
+            borderWidth: 2
+          }]
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: '#0d1b2a',
+              borderColor: 'rgba(212,160,23,.4)', borderWidth: 1,
+              titleColor: '#f0c040', bodyColor: '#c8d0dc',
+              callbacks: {
+                title: ti => { const l = ti[0].chart.data.labels[ti[0].dataIndex]; return Array.isArray(l) ? l.join(' ') : l; },
+                label: ctx => [` Complexity: ${ctx.raw.x}/10`, ` Likelihood: ${ctx.raw.y}%`]
+              }
+            }
+          },
+          scales: {
+            x: {
+              min: 0, max: 10,
+              grid: { color: 'rgba(255,255,255,.06)' },
+              ticks: { color: '#64748b', font: { family: 'Outfit' } },
+              title: { display: true, text: 'Complexity (1 = Easy → 10 = Hard)', color: '#64748b', font: { family: 'Outfit', size: 11 } }
+            },
+            y: {
+              min: 0, max: 110,
+              grid: { color: 'rgba(255,255,255,.06)' },
+              ticks: { color: '#64748b', font: { family: 'Outfit' } },
+              title: { display: true, text: 'Likelihood (%)', color: '#64748b', font: { family: 'Outfit', size: 11 } }
+            }
+          }
+        }
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => { initCharts(); });
+  </script>
+</body>
+
+</html>

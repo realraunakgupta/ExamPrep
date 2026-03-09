@@ -1,70 +1,76 @@
-# ExamPrep: PSLP Predictive Analysis
+# ⚡ ExamPrep — Semester IV Study Portal
 
-An interactive, responsive, and fully self-contained web infographic for Probability, Statistics, and Linear Programming (PSLP) exam preparation. 
-
-Built to help students analyze historical question trends and access authentic past papers effortlessly, this project encapsulates exam data into a highly visual dashboard with embedded analytics.
+A premium, interactive study portal for GGSIPU B.Tech Semester IV mid-term preparation. Features data-driven analytics, pattern-based study guides, and past-paper analysis for multiple subjects.
 
 ---
 
 ## 🚀 Features
 
-- **Predictive Analytics Tracking**: Highlights the historical recurrence likelihood of major topics (Bayes' Theorem, Standard Distributions, PMF/PDFs) based on multi-year data.
-- **Embedded PYQ Repository**: Includes the original mid-term question papers (2023–2025) embedded natively as Base64 Data URIs, completely nullifying the risk of 404 broken links or CDN caching issues. 
-- **Strategic Visualization**: Utilizes `Chart.js` for dynamic bar charts (topic likelihood) and doughnut charts (mark distributions). 
-- **Algorithmic Solutions**: Features dedicated study cards providing structured, step-by-step generic solutions to consistently recurring numerical problems. 
-- **Predicted Mock Paper**: Synthesized from the distribution weights of past exams, presenting a realistic mock paper for self-assessment.
-- **Sleek Interface & Dark Mode**: fully responsive utility-first design built on Tailwind CSS, featuring a beautiful toggleable dark mode interface optimized for both desktop and mobile studying.
+- **Multi-Subject Dashboard** — Homepage with subject cards linking to dedicated study tools for each paper.
+- **Predictive Analytics** — Chart.js-powered visualizations showing topic frequency and mark weightage across past papers.
+- **Pattern Master** — Accordion-based step-by-step solution guides for the most commonly repeated question types.
+- **Exact PYQ Citations** — Every past question is quoted verbatim with precise citations (e.g., `[Q1(a), April 2024]`).
+- **PDF Downloads** — Original mid-term question papers available for direct download.
+- **Study Guide** — Official syllabus highlights and core concept tables for quick revision.
+- **Predicted Mock Paper** — Synthesized mock exam based on historical trends.
+- **Dark Academia Theme** — Sleek, responsive UI with glassmorphism cards and smooth animations.
+
+---
+
+## 📚 Subjects Covered
+
+| Paper Code | Subject | Status |
+|---|---|---|
+| BS-202 | Probability, Statistics and Linear Programming | ✅ Available |
+| EEC-206 | Network Analysis and Synthesis | ✅ Available |
+| ECC-210 | Microprocessors and Microcontrollers | 🔜 Coming Soon |
+| ECC-212 | Digital Communications | 🔜 Coming Soon |
+| ECC-214 | Analog Electronics II | 🔜 Coming Soon |
+| HMC-208 | Universal Human Values | 🔜 Coming Soon |
 
 ---
 
 ## 🛠️ Project Structure
 
-The project is thoughtfully organized into development logic and production-ready output, guaranteeing easy access or modification of source data.
-
-```text
+```
 ExamPrep/
-├── index.html                  # The final standalone web application (Includes Base64 embedded PDFs)
-├── README.md                   # Project documentation
-├── scripts/                    # Python utility scripts utilized during development
-│   ├── add_dark_mode.py        # Automated injection of Tailwind Dark Mode UI classes 
-│   ├── embed_pdfs.py           # Core logic for converting binary PDFs to Base64 HTTP-embeddable links
-│   └── extract.py              # OCR text extraction algorithms utilized for initial analysis
-└── src/                        # Source materials and assets
-    ├── pyqs_text.txt           # Extracted textual analysis of past papers
-    └── pdfs/                   # Unmodified, original PDF scans of past term exams
+├── index.html              # Homepage — Subject Portal
+├── bs-202.html             # PSLP Dashboard (Analytics, Patterns, Study Guide, Predicted Paper)
+├── eec-206.html            # NAS Dashboard (Analytics, Patterns, Study Guide, Predicted Paper)
+├── coming-soon.html        # Placeholder for unimplemented subjects
+├── css/
+│   └── home.css            # Global stylesheet (shared by homepage + coming-soon)
+├── assets/
+│   └── pdfs/
+│       ├── PSLP/           # 4 original PSLP PYQ PDFs (May 2023 – March 2025)
+│       └── NAS/            # 3 original NAS PYQ PDFs (May 2023 – March 2025)
+└── README.md
 ```
 
 ---
 
-## 💻 Technologies Used
+## 💻 Technologies
 
-- **HTML5 & Vanilla JS / CSS**: Core structural and functional backbone.
-- **Tailwind CSS (via CDN)**: Rapid, standardized UI development.
-- **Chart.js**: Open-source HTML5-canvas-based data visualization library.
-- **Python 3**: Automation pipelines parsing the syllabus logic and embedding the binary PDFs into raw HTML strings.
+- **HTML5 & CSS3** — Structure and styling with CSS custom properties.
+- **Vanilla JavaScript** — Tab navigation, accordions, and interactivity.
+- **Chart.js** — Bar and bubble charts for exam analytics.
+- **Google Fonts** — Outfit (body) + DM Serif Display (headings).
 
 ---
 
-## ⚙️ Installation & Usage
+## ⚙️ Usage
 
-Because the website utilizes Base64 to embed PDFs directly into the HTML tree, no complex backend or package manager is required. 
-
-1. **Clone the repository:**
+1. **Clone:**
    ```bash
-   git clone https://github.com/yourusername/ExamPrep.git
+   git clone https://github.com/realraunakgupta/ExamPrep.git
    ```
-2. **Launch the platform:**
-   Simply double-click `index.html` to open it locally in any modern browser (Chrome, Firefox, Edge, Safari). Alternatively, run a static server (e.g., `python -m http.server`) for a networked experience.
-3. **Download PYQs:**
-   Navigate to the "PYQs" section and tap the respective year button. The PDF will instantly construct and download via the local browser engine.
+2. **Serve locally:**
+   ```bash
+   cd ExamPrep
+   python -m http.server 8000
+   ```
+3. **Open:** Navigate to `http://localhost:8000` in your browser.
 
 ---
 
-## 🔮 Limitations & Future Improvements
-
-- **Scalability**: While Base64 embedding guarantees 100% uptime for files, it significantly inflates the file size of `index.html` (currently spanning multiple megabytes). Moving to a hosted S3-bucket configuration may be optimal if the database expands significantly. 
-- **Dynamic Data Models**: The charts currently implement hardcoded datasets. A future iteration could decouple this logic into an external `.json` configuration file fetched upon app initialization.
-- **Extended Storage**: Only Units I and II are fully mapped. Integrating insights from Units III and IV would complete the curriculum coverage.
-
----
-*Developed synthetically for educational insight. Best of luck on the mid-terms!*
+*Built for GGSIPU Semester IV Mid-Term Preparation.*
